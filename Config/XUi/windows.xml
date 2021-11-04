@@ -1,0 +1,59 @@
+<configs>
+
+	<append xpath="/windows">
+
+
+		<window name="windowElectricityLampsStats" width="228" height="392" panel="Left" controller="XUiC_ElectricityLampsStats, Harmony-ElectricityLamps" >
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header">
+				<sprite depth="2" name="windowIcon" style="icon32px" pos="5,-5" sprite="ui_game_symbol_resource"/>
+				<label style="header.name" text="OPTIONS" text_key="xuiLightOptions" />
+			</panel>
+			<rect name="content" depth="0" pos="0,-46" height="346">
+				<sprite depth="4" name="backgroundMain" sprite="menu_empty3px" color="[black]" type="sliced" fillcenter="false" />
+				<sprite depth="1" color="[darkGrey]" type="sliced" width="228" height="343" pos="0,-3" />
+				<rect depth="2" pos="6,-5">
+					<grid name="stats" rows="5" cols="1" pos="3,-5" cell_width="222" cell_height="40" repeat_content="false" >
+						<panel height="30" width="340" disableautobackground="true" visible="{showfuel}">
+							<!-- <sprite depth="1" name="windowIcon" style="icon22px" pos="2,-2" sprite="ui_game_symbol_light_intensity"/> -->
+							<label depth="1" width="180" pos="2,-2" name="lblIntensity" font_size="22" text="Intensity" text_key="xuiIntensity" />
+							<combobox name ="uiIntensity" type="ComboBoxFloat" width="130" height="30" pos="80,-2"
+								value_increment="{LightIntensityStep}" value_min="{MinLightIntensity}" value_max="{MaxLightIntensity}" value_wrap="false" format_string="0.00" />
+						</panel>
+						<panel height="30" width="340" disableautobackground="true">
+							<!-- <sprite depth="1" name="windowIcon" style="icon22px" pos="2,-2" sprite="ui_game_symbol_light_range"/> -->
+							<label depth="1" width="180" pos="2,-2" name="lblRange" font_size="22" text="Intensity" text_key="xuiRange" />
+							<combobox name ="uiRange" type="ComboBoxFloat" width="130" height="30" pos="80,-2"
+								value_increment="{LightRangeStep}" value_min="{MinLightRange}" value_max="{MaxLightRange}" value_wrap="false" format_string="0.00" />
+						</panel>
+						<panel height="30" width="340" disableautobackground="true" visible="{IsSpotLight}">
+							<!-- <sprite depth="1" name="windowIcon" style="icon22px" pos="2,-2" sprite="ui_game_symbol_light_intensity"/> -->
+							<label depth="1" width="180" pos="2,-2" name="lblSpotAngle" font_size="22" text="Angle" text_key="xuiAngle" />
+							<combobox name ="uiSpotAngle" type="ComboBoxFloat" width="130" height="30" pos="80,-2"
+								value_increment="{SpotAngleStep}" value_min="{MinSpotAngle}" value_max="{MaxSpotAngle}" value_wrap="false" format_string="0°" />
+						</panel>
+						<panel height="30" width="340" disableautobackground="true">
+							<!-- <sprite depth="1" name="windowIcon" style="icon22px" pos="2,-2" sprite="ui_game_symbol_light_kelvins"/> -->
+							<label depth="1" width="180" pos="2,-2" name="lblLightMode" font_size="22" text="Mode" text_key="xuiLightMode" />
+							<combobox name="uiUseKelvin" type="ComboBoxBool" localization_prefix="xuiLightMode" width="130" height="30" pos="80,-2" />
+						</panel>
+						<panel height="30" width="340" disableautobackground="true" visible="{IsColorScale}">
+							<rect name="uiColorPicker" pos="0,-2" controller="ColorPicker">
+								<sprite depth="2" name="selectedColor" pos="172,0" style="icon30px" type="sliced"/>
+								<texture depth="2" name="svPicker" pos="6,0" width="160" height="160" on_drag="true" on_press="true">
+									<sprite depth="2" name="selectedColorSVPointer" pos="0,0" style="icon30px" width="21" height="21" type="sliced" pivot="center" sprite="ui_game_symbol_map_cursor"/>
+								</texture>
+								<texture depth="2" name="hPicker" pos="172,-33" width="30" height="127" on_drag="true" on_press="true" />
+							</rect>
+						</panel>
+						<panel height="30" width="340" disableautobackground="true" visible="{IsKelvinScale}">
+							<label depth="1" width="180" pos="2,-2" name="lblTemperature" font_size="22" text="Temp." text_key="xuiTemperature" />
+							<combobox name ="uiTemperature" type="ComboBoxInt" width="130" height="30" pos="80,-2"
+								value_increment="100" value_min="1000" value_max="12000" value_wrap="false" format_string="0" />
+						</panel>
+					</grid>
+				</rect>
+			</rect>
+		</window>
+	</append>
+
+</configs>

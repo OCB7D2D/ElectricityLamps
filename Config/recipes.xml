@@ -1,0 +1,40 @@
+<configs>
+
+	<append xpath="/recipes">
+
+		<recipe name="ocbLamp01" count="1"
+				tags="perkAdvancedEngineering,learnable"
+				craft_area="workbench" material_based="false"
+				craft_time="40">
+			<ingredient name="resourceHeadlight" count="1"/>
+			<ingredient name="resourceForgedIron" count="2"/>
+			<ingredient name="resourceScrapPolymers" count="4"/>
+			<ingredient name="resourceMechanicalParts" count="1"/>
+			<ingredient name="resourceElectricParts" count="4"/>
+		</recipe>
+
+		<recipe name="ocbLamp02" count="1"
+				tags="perkAdvancedEngineering,learnable"
+				craft_area="workbench" material_based="false"
+				craft_time="40">
+			<ingredient name="resourceHeadlight" count="1"/>
+			<ingredient name="resourceForgedIron" count="2"/>
+			<ingredient name="resourceScrapPolymers" count="2"/>
+			<ingredient name="resourceMechanicalParts" count="2"/>
+			<ingredient name="resourceElectricParts" count="4"/>
+		</recipe>
+
+		<recipe name="ocbLamp03" count="1"
+				tags="perkAdvancedEngineering,learnable"
+				craft_area="workbench" material_based="false"
+				craft_time="40">
+			<ingredient name="resourceHeadlight" count="1"/>
+			<ingredient name="resourceForgedIron" count="2"/>
+			<ingredient name="resourceScrapPolymers" count="2"/>
+			<ingredient name="resourceMechanicalParts" count="2"/>
+			<ingredient name="resourceElectricParts" count="4"/>
+		</recipe>
+
+	</append>
+
+</configs>

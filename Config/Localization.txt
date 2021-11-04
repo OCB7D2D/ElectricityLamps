@@ -1,0 +1,15 @@
+Key,File,Type,UsedInMainMenu,NoTranslate,english,Context / Alternate Text,german,latam,french,italian,japanese,koreana,polish,brazilian,russian,turkish,schinese,tchinese,spanish
+ocbLamp01,UI,Menu,,,Ceiling Lamp
+ocbLamp01Desc,UI,Menu,,,"Round ceiling lamp that also goes on walls. Color, angle and intensity can be adjusted."
+ocbLamp02,UI,Menu,,,Neon Tube Lamp
+ocbLamp02Desc,UI,Menu,,,"Neon tube ceiling or wall lamp. Color, angle and intensity can be adjusted."
+ocbLamp03,UI,Menu,,,Spotlight Lamp
+ocbLamp03Desc,UI,Menu,,,"Small recessed spotlight. Color, angle and intensity can be adjusted."
+xuiLightModeOn,UI,Menu,,,Kelvin
+xuiLightModeOff,UI,Menu,,,Color
+xuiIntensity,UI,Menu,,,Intensity
+xuiRange,UI,Menu,,,Range
+xuiAngle,UI,Menu,,,Angle
+xuiLightMode,UI,Menu,,,Mode
+xuiTemperature,UI,Menu,,,Temp.
+xuiLightOptions,UI,Menu,,,Light Options

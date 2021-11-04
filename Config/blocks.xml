@@ -1,0 +1,87 @@
+<configs>
+	<append xpath="/blocks">
+
+		<block name="ocbLamp01">
+			<!-- use our own implementation from harmony dll -->
+			<property name="Class" value="ElectricityLight, Harmony-ElectricityLamps"/>
+			<!-- set to point light with kelvins -->
+			<property name="LightMode" value="1"/>
+			<property name="LightKelvin" value="3200"/>
+			<!-- setup basic light options -->
+			<property name="LightIntensity" value="0.8"/>
+			<property name="LightMinIntensity" value="0.2"/>
+			<property name="LightMaxIntensity" value="1.8"/>
+			<property name="LightIntensityStep" value="0.1"/>
+			<property name="LightRange" value="10"/>
+			<property name="LightMinRange" value="0"/>
+			<property name="LightMaxRange" value="25"/>
+			<property name="LightRangeStep" value="1"/>
+			<!-- setup basic block properties -->
+			<property name="CreativeMode" value="Player"/>
+			<property name="Collide" value="movement,melee,bullet,arrow,rocket"/>
+			<property name="IsTerrainDecoration" value="false"/>
+			<property name="ImposterDontBlock" value="true"/>
+			<property name="Material" value="Mmetal_weak"/>
+			<property name="StabilitySupport" value="false"/>
+			<property name="Shape" value="ModelEntity" />
+			<property name="Mesh" value="models"/>
+			<!-- setup options for block type -->
+			<property name="TakeDelay" value="5"/>
+			<property name="Group" value="Science"/>
+			<property name="EconomicValue" value="10"/>
+			<property name="EconomicBundleSize" value="10"/>
+			<property name="FilterTags" value="fdecor,felectrical"/>
+			<property name="UnlockedBy" value="perkAdvancedEngineering,generatorbankSchematic"/>
+			<property name="SortOrder1" value="70a0"/>
+			<!-- setup harvesting options -->
+			<property class="RepairItems">
+				<property name="resourceScrapPolymers" value="2"/>
+			</property>
+			<drop event="Harvest" name="resourceElectricParts" count="1" prob="0.2" tag="salvageHarvest"/>
+			<drop event="Destroy" name="resourceScrapPolymers" count="1,2"/>
+			<!-- setup placing behavior -->
+			<property name="WireOffset" value="0,0,-.5"/>
+			<property name="HandleFace" value="South"/>
+			<!-- setup custom model, icons and more -->
+			<property name="Model" value="#@modfolder:Resources/Lamps.unity3d?Lamp01Prefab" />
+			<property name="DescriptionKey" value="ocbLamp01Desc"/>
+			<property name="CustomIcon" value="ElectricityLamp01"/>
+			<property name="RequiredPower" value="3"/>
+		</block>
+
+		<block name="ocbLamp02">
+			<property name="Extends" value="ocbLamp01"/>
+			<property name="LightIntensity" value="0.8"/>
+			<property name="LightMaxIntensity" value="2.4"/>
+			<!-- set to point light with kelvins -->
+			<property name="LightMode" value="1"/>
+			<property name="LightKelvin" value="6000"/>
+			<!-- setup custom model, icons and more -->
+			<property name="Model" value="#@modfolder:Resources/Lamps.unity3d?Lamp02Prefab" />
+			<property name="DescriptionKey" value="ocbLamp02Desc"/>
+			<property name="CustomIcon" value="ElectricityLamp02"/>
+			<property name="RequiredPower" value="3"/>
+		</block>
+
+		<block name="ocbLamp03">
+			<property name="Extends" value="ocbLamp01"/>
+			<!-- set to spot light with kelvins -->
+			<property name="LightMode" value="3"/>
+			<property name="LightKelvin" value="4800"/>
+			<property name="LightIntensity" value="0.9"/>
+			<property name="LightMaxIntensity" value="1.4"/>
+			<!-- setup options for spot light -->
+			<property name="LightAngle" value="95"/>
+			<property name="LightMinAngle" value="75"/>
+			<property name="LightMaxAngle" value="135"/>
+			<property name="LightAngleStep" value="5"/>
+			<!-- setup custom model, icons and more -->
+			<property name="Model" value="#@modfolder:Resources/Lamps.unity3d?Lamp03Prefab" />
+			<property name="DescriptionKey" value="ocbLamp03Desc"/>
+			<property name="CustomIcon" value="ElectricityLamp03"/>
+			<property name="RequiredPower" value="2"/>
+		</block>
+
+	</append>
+
+</configs>
