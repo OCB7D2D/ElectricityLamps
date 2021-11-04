@@ -1,5 +1,13 @@
 <configs>
 
-	<append xpath="/progression/perks/perk[@name='perkAdvancedEngineering']/effect_group/passive_effect[@name='RecipeTagUnlocked' and @value='1' and @level='2,5']/@tags">,ocbLamp01,ocbLamp02,ocbLamp03</append>
+	<append xpath="/progression/perks/perk[@name='perkArtOfMiningLantern']/effect_group/passive_effect[@name='RecipeTagUnlocked' and @value='1' and @level='1']/@tags">,ocbLanternLamp</append>
+	<append xpath="/progression/perks/perk[@name='perkTechJunkie8Complete']/effect_group/passive_effect[@name='RecipeTagUnlocked' and @value='1' and @level='1']/@tags">,ocbRoadBarricade</append>
+
+	<append xpath="/progression/perks/perk[@name='perkAdvancedEngineering']/effect_group/passive_effect[@name='RecipeTagUnlocked' and @value='1' and @level='2,5']/@tags">,ocbSignLampVariantHelper,ocbDeskLampVariantHelper</append>
+	<append xpath="/progression/perks/perk[@name='perkAdvancedEngineering']/effect_group/passive_effect[@name='RecipeTagUnlocked' and @value='1' and @level='3,5']/@tags">,ocbSmallCeilLampVariantHelper,ocbSmallWallLampVariantHelper</append>
+	<append xpath="/progression/perks/perk[@name='perkAdvancedEngineering']/effect_group/passive_effect[@name='RecipeTagUnlocked' and @value='1' and @level='3,5']/@tags">,ocbMediumCeilLampVariantHelper,ocbMediumWallLampVariantHelper</append>
+	<append xpath="/progression/perks/perk[@name='perkAdvancedEngineering']/effect_group/passive_effect[@name='RecipeTagUnlocked' and @value='1' and @level='4,5']/@tags">,ocbSpecialCeilLampVariantHelper</append>
+	<append xpath="/progression/perks/perk[@name='perkAdvancedEngineering']/effect_group/passive_effect[@name='RecipeTagUnlocked' and @value='1' and @level='5']/@tags">,ocbSpecialGroundLampVariantHelper</append>
+	<!-- <append xpath="/progression/perks/perk[@name='perkAdvancedEngineering']/effect_group/passive_effect[@name='RecipeTagUnlocked' and @value='1' and @level='5']/@tags">,ocbRoadBarricade</append> -->
 
 </configs>

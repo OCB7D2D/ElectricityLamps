@@ -1,9 +1,11 @@
 # OCB Electricity Lamps - 7 Days to Die (DMT/Harmony) Addon
 
-This (Harmony) Mod adds new light blocks that support coloring,
-dimming and angle adjustments (for spotlights only). You will
-need [DMT][11] already installed in your game folder to pick-up
-the harmony dll.
+This (Harmony) Mod adds new light blocks that support coloring, dimming
+and beam angle adjustments (for spotlights only). You will need
+[DMT][11] already installed in your game folder to pick-up the
+harmony dll from this mod.
+
+https://community.7daystodie.com/topic/25582-new-and-better-electric-lamplight-blocks-dmtharmony/
 
 ![Lamp Color Overview](Screens/ingame_variants_colorful.jpg)
 
@@ -31,7 +33,44 @@ accurate in regard to real-life, but should be good enough.
 
 ![Lamp Kelvin Overview](Screens/ingame_variants_temps.jpg)
 
-## New Lamp Models
+## Additional Lights included
+
+I initially developed this mod with three free models from
+the unity asset store. I soon found out that the vanilla
+lights already included in the game also worked once I had
+everything setup. So I created new block for every light
+similar to LittleMonstersTV's MOAR Lights mod. The blocks
+and recipe files are initially based from that mod.
+
+### 28 MOAR Lights
+
+![Lights Overview](Screens/ingame_lights_overview.jpg)
+
+Since we add 28 new blocks with this mod, I grouped
+them together in a few multi-shape helper blocks. This
+means that every block in a group has the same recipe.
+I had to make some trade-offs in order to group a few
+lights together (resources may not always match the
+specific type very precisely).
+
+- 2 Illuminated signs (engineer level 2)
+- 2 Desk/Table Lamps (engineer level 2)
+- 5 Small ceiling lights (engineer level 3)
+- 3 Small wall lights (engineer level 3)
+- 6 Medium ceiling lights (engineer level 3)
+- 1 Medium wall light (engineer level 3)
+- 4 Special ceiling lights (engineer level 4)
+- 3 Special "ground" lights (engineer level 4)
+
+Additionally there is the Road Block that was
+so special that it has it's own recipe!
+
+Note: I had to split the blocks into more groups than
+I wanted due to a bug when mixing blocks that need
+different `HandleFace` properties. Not exactly sure when
+and why this issue occurs though.
+
+### 3 New Light Models
 
 There are currently three different lamp models from the
 [Free PBR Lamps Pack (via UnityStore)][1] (thx!). Other lamp
@@ -39,20 +78,24 @@ models should be easy to add (see instructions further below).
 
 ![Lamp Overview all On](Screens/ingame_variants_on.jpg)
 
-- Classic neon tube lamp (ocbLamp02)
-- Small spotlight lamp (ocbLamp03)
-- Big round ceiling/wall lamp (ocbLamp01)
+- Classic neon tube light (ocbCustomLight02)
+- Recessed spotlight (ocbCustomLight03)
+- Big round ceiling/wall light (ocbCustomLight01)
 
 ![Lamp Overview all Off](Screens/ingame_variants_off.jpg)
 
-## How to create your own lights
+If you want even more lights to be craftable, I may also
+interested you in my additional MOAR lights addon:  
+https://github.com/OCB7D2D/ElectricityMoarLights
+
+### How to create your own lights
 
 Creating new lights is very simple, since everything is exposed
 into XML. So you simply need to create unity asset bundles with
 prefabs with your models and lights included. The rest is simple
 XML patching to create new blocks and recipes.
 
-### Adding new Models
+#### Adding new Models
 
 Short overview over the necessary steps. I assume you are already
 familiar with unity and how to export a simple cube into 7D2D. If
@@ -73,7 +116,7 @@ Some screenshot to get an idea how it should look:
 - [Screens/dev_unity_light.png][7]
 - [Screens/dev_unity_prefab_apply.png][8]
 
-### Create new Blocks
+#### Create new Blocks
 
 Once you created the models, you need to create new blocks so the
 player can actually craft them. This fallows the same rules as
@@ -86,7 +129,7 @@ It basically boils down to something like:
 <configs>
 	<append xpath="/blocks">
 		<block name="myCustomLamp">
-			<property name="Extends" value="ocbLamp01"/>
+			<property name="Extends" value="ocbCustomLight01"/>
 			<property name="Model" value="#@modfolder:Resources/CustomLamp.unity3d?CustomLampPrefab" />
 			<property name="DescriptionKey" value="myCustomLampDesc"/>
 			<property name="CustomIcon" value="myCustomLamp"/>
@@ -119,7 +162,7 @@ Not that our base block set the `UnlockedBy` option, which means that we
 also need to add our blocks to the progression system. You may also just
 reset those options if you'd like (although I haven't tested this config).
 
-The following setting allows the block to be crafted once engineering level 2 is reached.
+This setting allows blocks to be crafted once engineering level 3 is reached.
 
 ```xml:progression.xml
 <configs>
@@ -127,7 +170,7 @@ The following setting allows the block to be crafted once engineering level 2 is
 </configs>
 ```
 
-The following setting allows the block to be crafted when the book schematic is read.
+This setting allows the block to be crafted when the book schematic is read.
 
 ```xml:items.xml
 <configs>
@@ -137,13 +180,14 @@ The following setting allows the block to be crafted when the book schematic is 
 </configs>
 ```
 
-### Additional Block Options
+#### Additional Block Options
 
 Our new base block has a few additional settings you can configure via xml:
 
 ```xml
 <!-- set to point light with kelvins -->
 <property name="LightMode" value="1"/>
+<property name="LightModeLocked" value="false"/>
 <property name="LightKelvin" value="3200"/>
 <property name="LightColor" value="1,1,0"/>
 <!-- setup basic light options -->
@@ -160,6 +204,9 @@ Our new base block has a few additional settings you can configure via xml:
 <property name="LightMinAngle" value="75"/>
 <property name="LightMaxAngle" value="135"/>
 <property name="LightAngleStep" value="5"/>
+<!-- special flag used by lantern --> 
+<property name="PowerDontConnect" value="5"/>
+
 ```
 
 Most should be quite self-explanatory. The min and max values define the valid
@@ -175,7 +222,7 @@ UI and is not really enforced. Finally a default value for each option.
 - LightRange: Unity light object range
 - LingAngle: Unity light object angle
 
-### Further information
+#### Further information
 
 When I first tried to implement better lights, I researched how
 original code drives the lights ([using dotPeek][3]). When you
@@ -212,6 +259,66 @@ code didn't really do very well, since I really simply just want to
 enable the emission color on the prefab when turned on (and not show
 different meshes). Since I had to hack the class anyway quite a bit
 I decided to completely replace it with new `BlockElectricityLight`.
+
+## Recipe changes
+
+The existing recipes for lights are removed, since you can place them
+now via the new multi-shape master blocks. The recipes have been cranked
+up quite a bit, as pretty much all lights will need at least one headlight,
+because you always need a reason to wrench some more cars :)
+
+The two table lamps are unlocked at engineering level 2 (I guess you
+could buy a power generator at that level already). These recipes will
+need broken glass, which is currently not craftable, but should be easy
+enough to come by in the world (look out the window).
+
+Most lights unlock at perk level 3,
+Big Ceiling Lights at level 4
+and Heavy Duty Lights at level 5.
+
+### Lantern
+
+The lantern is a bit special and needed a few tweaks in this mod, as the base
+blocks are now powered and thus allows wired connections, but the lantern is
+supposed to light on its own without needing any power (did I say free energy?).
+The recipe has been cranked up to include a battery to make it more believable.
+I guess adding another solar cell to the mix would be overkill though.
+
+### Road Barricade
+
+Finally I also included the road barricade block for fun. I really have no idea
+if there is any real use for it in its current form. It does have a substantial
+amount of hit-points (7500). Might be useful to temporarily block an entrance
+since you could pick it back up later. For the challenge I've put this recipe
+behind the `TechJunkie8Complete` perk, meaning it is only available after you
+read all the Tech Junkie Volumes. Ideally we would need to add a schematic to
+the game, but haven't yet come around to do that (PRs welcome).
+
+## Tweaking and Fine-Tuning
+
+I have only just roughly adjusted the different lights in terms of parameters.
+The idea is that some might be able to go a bit higher than others for some
+added power cost (e.g. 2W vs 3W). These settings and limits need further fine
+tuning. Also repair, harvest and economic resources are only roughly adjusted.
+So if you see something that is odd, open an issue here on GitHub. 
+
+## Changelog
+
+### Version 0.5.0
+
+- Fixed light range being constantly overwritten by LightLOD
+- Fixed rotation in the unity3d file, meaning your existing lights
+  will have the wrong rotation once loaded again. Only solution
+  is to pick them up and place them again.
+- Added new flag `PowerDontConnect` for lantern edge-case
+
+### Version 0.1.0
+
+- Initial version
+
+## Compatibility
+
+I've developed and tested this Mod against version a19.6b8.
 
 [1]: https://assetstore.unity.com/packages/3d/props/interior/free-pbr-lamps-70181
 [2]: https://github.com/7D2D/Templates-and-Utilities

@@ -27,11 +27,11 @@
 						</panel>
 						<panel height="30" width="340" disableautobackground="true" visible="{IsSpotLight}">
 							<!-- <sprite depth="1" name="windowIcon" style="icon22px" pos="2,-2" sprite="ui_game_symbol_light_intensity"/> -->
-							<label depth="1" width="180" pos="2,-2" name="lblSpotAngle" font_size="22" text="Angle" text_key="xuiAngle" />
+							<label depth="1" width="180" pos="2,-2" name="lblSpotAngle" font_size="22" text="Beam ∠" text_key="xuiAngle" />
 							<combobox name ="uiSpotAngle" type="ComboBoxFloat" width="130" height="30" pos="80,-2"
 								value_increment="{SpotAngleStep}" value_min="{MinSpotAngle}" value_max="{MaxSpotAngle}" value_wrap="false" format_string="0°" />
 						</panel>
-						<panel height="30" width="340" disableautobackground="true">
+						<panel height="30" width="340" disableautobackground="true" visible="{IsModeNotLocked}">
 							<!-- <sprite depth="1" name="windowIcon" style="icon22px" pos="2,-2" sprite="ui_game_symbol_light_kelvins"/> -->
 							<label depth="1" width="180" pos="2,-2" name="lblLightMode" font_size="22" text="Mode" text_key="xuiLightMode" />
 							<combobox name="uiUseKelvin" type="ComboBoxBool" localization_prefix="xuiLightMode" width="130" height="30" pos="80,-2" />
@@ -48,7 +48,7 @@
 						<panel height="30" width="340" disableautobackground="true" visible="{IsKelvinScale}">
 							<label depth="1" width="180" pos="2,-2" name="lblTemperature" font_size="22" text="Temp." text_key="xuiTemperature" />
 							<combobox name ="uiTemperature" type="ComboBoxInt" width="130" height="30" pos="80,-2"
-								value_increment="100" value_min="1000" value_max="12000" value_wrap="false" format_string="0" />
+								value_increment="100" value_min="1000" value_max="12000" value_wrap="false" format_string="0K" />
 						</panel>
 					</grid>
 				</rect>

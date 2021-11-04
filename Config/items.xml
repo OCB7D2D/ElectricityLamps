@@ -1,9 +1,12 @@
 <configs>
 
 	<append xpath="/items/item[@name='generatorbankSchematic']/effect_group">
-		<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="ocbLamp01" operation="set" value="1"/>
-		<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="ocbLamp02" operation="set" value="1"/>
-		<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="ocbLamp03" operation="set" value="1"/>
+		<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="ocbSignLampVariantHelper" operation="set" value="1"/>
+		<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="ocbDeskLampVariantHelper" operation="set" value="1"/>
+		<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="ocbSmallCeilLampVariantHelper" operation="set" value="1"/>
+		<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="ocbSmallWallLampVariantHelper" operation="set" value="1"/>
+		<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="ocbMediumCeilLampVariantHelper" operation="set" value="1"/>
+		<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="ocbMediumWallLampVariantHelper" operation="set" value="1"/>
 	</append>
 
 </configs>

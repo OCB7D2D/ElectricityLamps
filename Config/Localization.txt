@@ -1,15 +1,78 @@
-Key,File,Type,UsedInMainMenu,NoTranslate,english,Context / Alternate Text,german,latam,french,italian,japanese,koreana,polish,brazilian,russian,turkish,schinese,tchinese,spanish
-ocbLamp01,UI,Menu,,,Ceiling Lamp
-ocbLamp01Desc,UI,Menu,,,"Round ceiling lamp that also goes on walls. Color, angle and intensity can be adjusted."
-ocbLamp02,UI,Menu,,,Neon Tube Lamp
-ocbLamp02Desc,UI,Menu,,,"Neon tube ceiling or wall lamp. Color, angle and intensity can be adjusted."
-ocbLamp03,UI,Menu,,,Spotlight Lamp
-ocbLamp03Desc,UI,Menu,,,"Small recessed spotlight. Color, angle and intensity can be adjusted."
-xuiLightModeOn,UI,Menu,,,Kelvin
-xuiLightModeOff,UI,Menu,,,Color
-xuiIntensity,UI,Menu,,,Intensity
-xuiRange,UI,Menu,,,Range
-xuiAngle,UI,Menu,,,Angle
-xuiLightMode,UI,Menu,,,Mode
-xuiTemperature,UI,Menu,,,Temp.
-xuiLightOptions,UI,Menu,,,Light Options
+Key,File,Type,english
+
+ocbCustomLight01,blocks,block,Powered Round Ceiling Light
+ocbCustomLight01Desc,blocks,block,"Round ceiling lamp that also goes on walls. Color, beam angle and intensity can be adjusted."
+ocbCustomLight02,blocks,block,Powered Neon Tube Light
+ocbCustomLight02Desc,blocks,block,"Neon tube ceiling or wall lamp. Color, beam angle and intensity can be adjusted."
+ocbCustomLight03,blocks,block,Powered Recessed Spotlight
+ocbCustomLight03Desc,blocks,block,"Small recessed spotlight. Color, beam angle and intensity can be adjusted."
+
+xuiLightModeOn,UI,Menu,Kelvin
+xuiLightModeOff,UI,Menu,Color
+xuiIntensity,UI,Menu,Intensity
+xuiRange,UI,Menu,Range
+xuiAngle,UI,Menu,Beam ∠
+xuiLightMode,UI,Menu,Mode
+xuiTemperature,UI,Menu,Temp.
+xuiLightOptions,UI,Menu,Light Options
+
+ocbLanternLamp,block,block,"Mining Lantern"
+ocbLanternLampDesc,block,block,"Mining Lantern that doesn't need any external power. Unlocked by reading Art of Mining Vol 7."
+ocbRoadBarricade,blocks,block,"Powered Road Barricade"
+ocbRoadBarricadeDesc,blocks,block,"Robust Road Barricade. Can be powered to be visible from far away. Unlocked by reading all Tech Junkie volumes."
+
+ocbDeskLampVariantHelper,block,block,"Table Lamps"
+ocbSignLampVariantHelper,block,block,"Illuminated Signs"
+ocbSmallWallLampVariantHelper,block,block,"Small Wall Lights"
+ocbSmallCeilLampVariantHelper,block,block,"Small Ceiling Lights"
+ocbMediumWallLampVariantHelper,block,block,"Medium Wall Lights"
+ocbMediumCeilLampVariantHelper,block,block,"Medium Ceiling Lights"
+ocbSpecialCeilLampVariantHelper,block,block,"Special Ceiling Lights"
+ocbSpecialGroundLampVariantHelper,block,block,"Special Ground Lights"
+
+ocbDeskLampVariantHelperDesc,UI,Menu,"Powered table lamps. Can be dimmed and colored when placed inside your land claim. Put crafted block on your hotbar, hold Reload action and select Shape entry from the radial menu. Click or Shift-Click to select a variant to build with. Note: it's best to change rotation to SIMPLE before trying to place."
+ocbSignLampVariantHelperDesc,UI,Menu,"Powered illuminated signs. Can be dimmed and colored when placed inside your land claim. Put crafted block on your hotbar, hold Reload action and select Shape entry from the radial menu. Click or Shift-Click to select a variant to build with. Note: it's best to change rotation to SIMPLE before trying to place."
+ocbSmallWallLampVariantHelperDesc,UI,Menu,"Powered small wall lights. Can be dimmed and colored when placed inside your land claim. Put crafted block on your hotbar, hold Reload action and select Shape entry from the radial menu. Click or Shift-Click to select a variant to build with. Note: it's best to change rotation to SIMPLE before trying to place."
+ocbSmallCeilLampVariantHelperDesc,UI,Menu,"Powered small ceiling lights. Can be dimmed and colored when placed inside your land claim. Put crafted block on your hotbar, hold Reload action and select Shape entry from the radial menu. Click or Shift-Click to select a variant to build with. Note: it's best to change rotation to SIMPLE before trying to place."
+ocbMediumWallLampVariantHelperDesc,UI,Menu,"Powered medium wall lights. Can be dimmed and colored when placed inside your land claim. Put crafted block on your hotbar, hold Reload action and select Shape entry from the radial menu. Click or Shift-Click to select a variant to build with. Note: it's best to change rotation to SIMPLE before trying to place."
+ocbMediumCeilLampVariantHelperDesc,UI,Menu,"Powered medium ceiling lights. Can be dimmed and colored when placed inside your land claim. Put crafted block on your hotbar, hold Reload action and select Shape entry from the radial menu. Click or Shift-Click to select a variant to build with. Note: it's best to change rotation to SIMPLE before trying to place."
+ocbSpecialCeilLampVariantHelperDesc,UI,Menu,"Powered special ceiling lights. Can be dimmed and colored when placed inside your land claim. Put crafted block on your hotbar, hold Reload action and select Shape entry from the radial menu. Click or Shift-Click to select a variant to build with. Note: it's best to change rotation to SIMPLE before trying to place."
+ocbSpecialGroundLampVariantHelperDesc,UI,Menu,"Powered special ground lights. Can be dimmed and colored when placed inside your land claim. Put crafted block on your hotbar, hold Reload action and select Shape entry from the radial menu. Click or Shift-Click to select a variant to build with. Note: it's best to change rotation to SIMPLE before trying to place."
+
+ocbSignLampDesc,blocks,block,"Illuminated sign that requires power. Can be dimmed and colored when placed inside your land claim. Unlocked at Engineering Perk level 2."
+ocbDeskLampDesc,blocks,block,"Desk lamp that requires power. Can be dimmed and colored when placed inside your land claim. Unlocked at Engineering Perk level 2."
+ocbSmallWallLampDesc,blocks,block,"Small wall light that requires power. Can be dimmed and colored when placed inside your land claim. Unlocked at Engineering Perk level 3."
+ocbSmallCeilLampDesc,blocks,block,"Small ceiling light that requires power. Can be dimmed and colored when placed inside your land claim. Unlocked at Engineering Perk level 3."
+ocbMediumWallLampDesc,blocks,block,"Medium wall light that requires power. Can be dimmed and colored when placed inside your land claim. Unlocked at Engineering Perk level 3."
+ocbMediumCeilLampDesc,blocks,block,"Medium ceiling light that requires power. Can be dimmed and colored when placed inside your land claim. Unlocked at Engineering Perk level 3."
+ocbSpecialCeilLampDesc,blocks,block,"Special ceiling light that requires power. Can be dimmed and colored when placed inside your land claim. Unlocked at Engineering Perk level 4."
+ocbSpecialGroundLampDesc,blocks,block,"Special ground light that requires power. Can be dimmed and colored when placed inside your land claim. Unlocked at Engineering Perk level 5."
+
+ocbCeilingLight01,blocks,block,"Powered Light Bulb Socket"
+ocbCeilingLight02,blocks,block,"Powered Round Light (black)"
+ocbCeilingLight03,blocks,block,"Powered Round Light (brass)"
+ocbCeilingLight04,blocks,block,"Powered Ceiling Light (white)"
+ocbCeilingLight05,blocks,block,"Powered Ceiling Light (black)"
+ocbCeilingLight06,blocks,block,"Powered Ceiling Light (brass)"
+ocbCeilingLight07,blocks,block,"Powered Neon Tube Light"
+ocbRecessedLight01,blocks,block,"Powered Recessed Light"
+ocbIndustrialLight01,blocks,block,"Powered Industrial Box Light"
+ocbIndustrialLight02,blocks,block,"Powered Industrial Bulb Light"
+ocbIndustrialLight03,blocks,block,"Powered Industrial Red Bulb Light"
+ocbPorchLight01,blocks,block,"Powered Porch Light (rusted)"
+ocbPorchLight02,blocks,block,"Powered Porch Light (black)"
+ocbPorchLight03,blocks,block,"Powered Porch Light (brass)"
+ocbSconceLight01,blocks,block,"Powered Sconce Light"
+ocbWallLight01,blocks,block,"Powered Wall Light"
+ocbExitSign01,blocks,block,"Powered Exit Sign"
+ocbOpenSign01,blocks,block,"Powered Open Sign"
+ocbDeskLamp01,blocks,block,"Powered Desk Lamp"
+ocbTableLamp01,blocks,block,"Powered Table Lamp"
+ocbCeilingFanLight01,blocks,block,"Powered Ceiling Fan Light"
+ocbFluorescentLight01,blocks,block,"Powered Fluorescent Light"
+ocbTrackLight01,blocks,block,"Powered Track Light"
+ocbChandelierLight01,blocks,block,"Powered Chandelier Light"
+ocbWorkLight01,blocks,block,"Powered Work Light"
+ocbStreetLight01,blocks,block,"Powered Street Light"
+
+bookTechJunkie8Complete,UI,Menu,"All Tech Junkie Volumes"

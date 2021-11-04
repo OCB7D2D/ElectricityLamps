@@ -1,40 +1,213 @@
 <configs>
 
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START OCB ELECTRICITY MOAR LIGHTS -->
 	<append xpath="/recipes">
-
-		<recipe name="ocbLamp01" count="1"
-				tags="perkAdvancedEngineering,learnable"
+	
+		<recipe name="ocbSignLampVariantHelper" count="1"
+				tags="perkAdvancedEngineering,learnable,workbenchCrafting"
 				craft_area="workbench" material_based="false"
-				craft_time="40">
-			<ingredient name="resourceHeadlight" count="1"/>
-			<ingredient name="resourceForgedIron" count="2"/>
-			<ingredient name="resourceScrapPolymers" count="4"/>
-			<ingredient name="resourceMechanicalParts" count="1"/>
-			<ingredient name="resourceElectricParts" count="4"/>
+				craft_time="15">
+					<ingredient name="resourceBrokenGlass" count="4"/>
+					<ingredient name="resourceForgedIron" count="4"/>
+					<ingredient name="resourceScrapPolymers" count="4"/>
+					<ingredient name="resourceMechanicalParts" count="1"/>
+					<ingredient name="resourceElectricParts" count="4"/>
+			<effect_group>
+				<passive_effect name="CraftingIngredientCount" level="0,1,2,3,4" operation="perc_add"
+					value=".5,.5,.5,.3,.15" tags="resourceForgedIron,resourceScrapPolymers,resourceElectricParts"/>
+			</effect_group>
 		</recipe>
 
-		<recipe name="ocbLamp02" count="1"
-				tags="perkAdvancedEngineering,learnable"
+		<!-- Small green desk lamp (ocbDeskLamp01) -->
+		<!-- Small desk lamp vase (ocbTableLamp01) -->
+		<recipe name="ocbDeskLampVariantHelper" count="1"
+				tags="perkAdvancedEngineering,learnable,workbenchCrafting"
 				craft_area="workbench" material_based="false"
-				craft_time="40">
-			<ingredient name="resourceHeadlight" count="1"/>
-			<ingredient name="resourceForgedIron" count="2"/>
-			<ingredient name="resourceScrapPolymers" count="2"/>
-			<ingredient name="resourceMechanicalParts" count="2"/>
-			<ingredient name="resourceElectricParts" count="4"/>
+				craft_time="25">
+					<ingredient name="resourceBrokenGlass" count="4"/>
+					<ingredient name="resourceForgedIron" count="4"/>
+					<ingredient name="resourceMechanicalParts" count="1"/>
+					<ingredient name="resourceElectricParts" count="4"/>
+			<effect_group>
+				<passive_effect name="CraftingIngredientCount" level="0,1,2,3,4" operation="perc_add"
+					value=".5,.5,.5,.3,.15" tags="resourceForgedIron,resourceElectricParts"/>
+			</effect_group>
 		</recipe>
 
-		<recipe name="ocbLamp03" count="1"
-				tags="perkAdvancedEngineering,learnable"
+		<!-- Small simple light bulb in socket (ocbCeilingLight01) -->
+		<!-- Small bulb with ceiling lampshade white (ocbCeilingLight04) -->
+		<!-- Small bulb with ceiling lampshade black (ocbCeilingLight05) -->
+		<!-- Small bulb with ceiling lampshade brass (ocbCeilingLight06) -->
+		<!-- Small recessed spot light lamp (ocbRecessedLight01) -->
+		<recipe name="ocbSmallCeilLampVariantHelper" count="1"
+				tags="perkAdvancedEngineering,learnable,workbenchCrafting"
+				craft_area="workbench" material_based="false"
+				craft_time="30">
+					<ingredient name="resourceBrokenGlass" count="4"/>
+					<ingredient name="resourceForgedIron" count="2"/>
+					<ingredient name="resourceScrapPolymers" count="2"/>
+					<ingredient name="resourceMechanicalParts" count="2"/>
+					<ingredient name="resourceElectricParts" count="4"/>
+			<effect_group>
+				<passive_effect name="CraftingIngredientCount" level="0,1,2,3,4" operation="perc_add"
+					value=".5,.5,.5,.3,.15" tags="resourceForgedIron,resourceScrapPolymers,resourceElectricParts"/>
+			</effect_group>
+		</recipe>
+
+		<!-- Small bulb in casing for outdoor rusted (ocbPorchLight01) -->
+		<!-- Small bulb in casing for outdoor black (ocbPorchLight02) -->
+		<!-- Small bulb in casing for outdoor brass (ocbPorchLight03) -->
+		<!-- Big round ceiling/wall lamp (ocbCustomLight01) -->
+		<recipe name="ocbSmallWallLampVariantHelper" count="1"
+				tags="perkAdvancedEngineering,learnable,workbenchCrafting"
+				craft_area="workbench" material_based="false"
+				craft_time="30">
+					<ingredient name="resourceBrokenGlass" count="4"/>
+					<ingredient name="resourceForgedIron" count="2"/>
+					<ingredient name="resourceScrapPolymers" count="2"/>
+					<ingredient name="resourceMechanicalParts" count="2"/>
+					<ingredient name="resourceElectricParts" count="4"/>
+			<effect_group>
+				<passive_effect name="CraftingIngredientCount" level="0,1,2,3,4" operation="perc_add"
+					value=".5,.5,.5,.3,.15" tags="resourceForgedIron,resourceScrapPolymers,resourceElectricParts"/>
+			</effect_group>
+		</recipe>
+
+		<!-- Medium round ceiling/wall lamp black (ocbCeilingLight02) -->
+		<!-- Medium round ceiling/wall lamp brass (ocbCeilingLight03) -->
+		<!-- Medium corner light (ocbSconceLight01) -->
+		<!-- Medium bulb in encasing (white) (ocbIndustrialLight02) -->
+		<!-- Medium bulb in encasing (red) (ocbIndustrialLight03) -->
+		<!-- Medium double ceiling neon tube light(ocbCeilingLight07) -->
+		<!-- Recessed spotlight (ocbCustomLight03) -->
+		<recipe name="ocbMediumCeilLampVariantHelper" count="1"
+				tags="perkAdvancedEngineering,learnable,workbenchCrafting"
 				craft_area="workbench" material_based="false"
 				craft_time="40">
-			<ingredient name="resourceHeadlight" count="1"/>
-			<ingredient name="resourceForgedIron" count="2"/>
-			<ingredient name="resourceScrapPolymers" count="2"/>
-			<ingredient name="resourceMechanicalParts" count="2"/>
-			<ingredient name="resourceElectricParts" count="4"/>
+					<ingredient name="resourceHeadlight" count="1"/>
+					<ingredient name="resourceForgedIron" count="4"/>
+					<ingredient name="resourceScrapPolymers" count="6"/>
+					<ingredient name="resourceMechanicalParts" count="2"/>
+					<ingredient name="resourceElectricParts" count="4"/>
+			<effect_group>
+				<passive_effect name="CraftingIngredientCount" level="0,1,2,3,4" operation="perc_add"
+					value=".5,.5,.5,.3,.15" tags="resourceForgedIron,resourceScrapPolymers,resourceElectricParts"/>
+			</effect_group>
+		</recipe>
+
+		<!-- Medium double square box light (ocbIndustrialLight01) -->
+		<!-- Small outdoor lamp with gooseneck (ocbWallLight01) -->
+		<!-- Classic neon tube light (ocbCustomLight02) -->
+		<recipe name="ocbMediumWallLampVariantHelper" count="1"
+				tags="perkAdvancedEngineering,learnable,workbenchCrafting"
+				craft_area="workbench" material_based="false"
+				craft_time="40">
+					<ingredient name="resourceHeadlight" count="1"/>
+					<ingredient name="resourceForgedIron" count="4"/>
+					<ingredient name="resourceScrapPolymers" count="6"/>
+					<ingredient name="resourceMechanicalParts" count="2"/>
+					<ingredient name="resourceElectricParts" count="4"/>
+			<effect_group>
+				<passive_effect name="CraftingIngredientCount" level="0,1,2,3,4" operation="perc_add"
+					value=".5,.5,.5,.3,.15" tags="resourceForgedIron,resourceScrapPolymers,resourceElectricParts"/>
+			</effect_group>
+		</recipe>
+
+		<!-- Big ceiling fan lamp (ocbCeilingFanLight01) -->
+		<!-- Big ceiling chandelier with 9 bulbs (ocbChandelierLight01) -->
+		<!-- Big ceiling quadruple neon tube (ocbFluorescentLight01) -->
+		<!-- Big tripple halogen track light (ocbTrackLight01) -->
+		<recipe name="ocbSpecialCeilLampVariantHelper" count="1"
+				tags="perkAdvancedEngineering,learnable,workbenchCrafting"
+				craft_area="workbench" material_based="false"
+				craft_time="60">
+					<ingredient name="resourceHeadlight" count="2"/>
+					<ingredient name="resourceForgedSteel" count="4"/>
+					<ingredient name="resourceScrapPolymers" count="8"/>
+					<ingredient name="resourceMechanicalParts" count="4"/>
+					<ingredient name="resourceElectricParts" count="8"/>
+			<effect_group>
+				<passive_effect name="CraftingIngredientCount" level="0,1,2,3,4" operation="perc_add"
+					value=".5,.5,.5,.3,.15" tags="resourceForgedIron,resourceScrapPolymers,resourceElectricParts"/>
+			</effect_group>
+		</recipe>
+
+		<!-- Special construction site light (ocbWorkLight01) -->
+		<!-- Special big outdoor mast lamp post (ocbMastLamp01) -->
+		<!-- Special big street lamp upper part (ocbStreetLight01) -->
+		<recipe name="ocbSpecialGroundLampVariantHelper" count="1"
+				tags="perkAdvancedEngineering,learnable,workbenchCrafting"
+				craft_area="workbench" material_based="false"
+				craft_time="90">
+					<ingredient name="resourceHeadlight" count="2"/>
+					<ingredient name="resourceForgedSteel" count="12"/>
+					<ingredient name="resourceScrapPolymers" count="8"/>
+					<ingredient name="resourceMechanicalParts" count="4"/>
+					<ingredient name="resourceElectricParts" count="8"/>
+			<effect_group>
+				<passive_effect name="CraftingIngredientCount" level="0,1,2,3,4" operation="perc_add"
+					value=".5,.5,.5,.3,.15" tags="resourceForgedIron,resourceScrapPolymers,resourceElectricParts"/>
+			</effect_group>
 		</recipe>
 
 	</append>
+	<!-- END OCB ELECTRICITY MOAR LIGHTS -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START OF STANDALONE BLOCKS -->
+	<append xpath="/recipes">
+
+		<!-- behind perkArtOfMiningLantern -->
+		<recipe name="ocbLanternLamp" count="1"
+				tags="learnable,workbenchCrafting"
+				craft_area="workbench" material_based="false"
+				craft_time="75">
+					<ingredient name="carBattery" count="1"/>
+					<ingredient name="resourceHeadlight" count="1"/>
+					<ingredient name="resourceScrapPolymers" count="8"/>
+					<ingredient name="resourceMechanicalParts" count="2"/>
+					<ingredient name="resourceElectricParts" count="6"/>
+			<effect_group>
+				<passive_effect name="CraftingIngredientCount" level="0,1,2,3,4" operation="perc_add" value=".5,.5,.5,.3,.15" tags="resourceScrapPolymers,resourceElectricParts"/>
+			</effect_group>
+		</recipe>
+
+		<recipe name="ocbRoadBarricade" count="1"
+				tags="perkTechJunkie8Complete,learnable,workbenchCrafting"
+				craft_area="workbench" material_based="false"
+				craft_time="90">
+					<ingredient name="resourceHeadlight" count="2"/>
+					<ingredient name="resourceForgedSteel" count="12"/>
+					<ingredient name="resourceScrapPolymers" count="8"/>
+					<ingredient name="resourceElectricParts" count="8"/>
+					<ingredient name="resourceWood" count="48"/>
+			<effect_group>
+				<passive_effect name="CraftingIngredientCount" level="0,1,2,3,4" operation="perc_add"
+					value=".5,.5,.5,.3,.15" tags="resourceForgedSteel,resourceScrapPolymers,resourceElectricParts"/>
+			</effect_group>
+		</recipe>
+
+	</append>
+	<!-- END OF STANDALONE BLOCKS -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- remove obsolete recipes from ElectricityLamps Mod -->
+	<remove xpath="/recipes/recipe[@name='lanternLight_player']"/>
+	<remove xpath="/recipes/recipe[@name='ceilingLight01_player']"/>
+	<remove xpath="/recipes/recipe[@name='industrialLight01_player']"/>
+	<remove xpath="/recipes/recipe[@name='industrialLight02_player']"/>
+	<!-- <remove xpath="/recipes/recipe[@name='ceilingLight07_player']"/> -->
+	<!-- <remove xpath="/recipes/recipe[@name='porchLight01_player']"/> -->
+	<!-- <remove xpath="/recipes/recipe[@name='chandelierLight_player']"/> -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
 
 </configs>

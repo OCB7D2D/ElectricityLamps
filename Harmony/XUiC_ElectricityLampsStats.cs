@@ -10,16 +10,15 @@ public class XUiC_ElectricityLampsStats : XUiController
 
     private PowerItem powerItem;
 
-
     public TileEntityElectricityLightBlock TileEntity
     {
         get => this.tileEntity;
         set
         {
-        this.tileEntity = value;
-        if (!SingletonMonoBehaviour<ConnectionManager>.Instance.IsServer)
-            return;
-        this.powerItem = this.tileEntity.GetPowerItem() as PowerItem;
+            this.tileEntity = value;
+            if (!SingletonMonoBehaviour<ConnectionManager>.Instance.IsServer)
+                return;
+            this.powerItem = this.tileEntity.GetPowerItem() as PowerItem;
         }
     }
 
@@ -191,6 +190,9 @@ public class XUiC_ElectricityLampsStats : XUiController
         case "LightIntensityStep":
             value = tileEntity != null ? tileEntity.LightIntensityStep.ToString() : "180";
             return true;
+        case "IsModeNotLocked":
+            value = tileEntity != null && tileEntity.IsModeLocked ? "false" : "true";
+            return true;
         default:
             return false;
         }
@@ -198,8 +200,7 @@ public class XUiC_ElectricityLampsStats : XUiController
 
     public override void Update(float _dt)
     {
-        if ((UnityEngine.Object) GameManager.Instance == (UnityEngine.Object) null && GameManager.Instance.World == null || this.tileEntity == null)
-        return;
+        if ((UnityEngine.Object) GameManager.Instance == (UnityEngine.Object) null && GameManager.Instance.World == null || this.tileEntity == null) return;
         base.Update(_dt);
         this.RefreshBindings();
     }

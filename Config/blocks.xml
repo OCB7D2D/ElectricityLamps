@@ -1,87 +1,977 @@
 <configs>
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START BASE BLOCK TYPES -->
 	<append xpath="/blocks">
 
-		<block name="ocbLamp01">
+		<!-- Root Block -->
+		<block name="ocbLampMaster">
+			<!-- never show this block anywhere -->
+			<property name="CreativeMode" value="None"/>
 			<!-- use our own implementation from harmony dll -->
 			<property name="Class" value="ElectricityLight, Harmony-ElectricityLamps"/>
-			<!-- set to point light with kelvins -->
-			<property name="LightMode" value="1"/>
-			<property name="LightKelvin" value="3200"/>
-			<!-- setup basic light options -->
-			<property name="LightIntensity" value="0.8"/>
-			<property name="LightMinIntensity" value="0.2"/>
-			<property name="LightMaxIntensity" value="1.8"/>
-			<property name="LightIntensityStep" value="0.1"/>
-			<property name="LightRange" value="10"/>
-			<property name="LightMinRange" value="0"/>
-			<property name="LightMaxRange" value="25"/>
-			<property name="LightRangeStep" value="1"/>
-			<!-- setup basic block properties -->
-			<property name="CreativeMode" value="Player"/>
-			<property name="Collide" value="movement,melee,bullet,arrow,rocket"/>
-			<property name="IsTerrainDecoration" value="false"/>
-			<property name="ImposterDontBlock" value="true"/>
-			<property name="Material" value="Mmetal_weak"/>
-			<property name="StabilitySupport" value="false"/>
-			<property name="Shape" value="ModelEntity" />
-			<property name="Mesh" value="models"/>
-			<!-- setup options for block type -->
+			<!-- some basic block options -->
 			<property name="TakeDelay" value="5"/>
+			<property name="MaxDamage" value="500"/>
+			<property name="SellableToTrader" value="true"/>
+			<property name="Material" value="Mmetal"/>
 			<property name="Group" value="Science"/>
-			<property name="EconomicValue" value="10"/>
-			<property name="EconomicBundleSize" value="10"/>
-			<property name="FilterTags" value="fdecor,felectrical"/>
-			<property name="UnlockedBy" value="perkAdvancedEngineering,generatorbankSchematic"/>
 			<property name="SortOrder1" value="70a0"/>
-			<!-- setup harvesting options -->
-			<property class="RepairItems">
-				<property name="resourceScrapPolymers" value="2"/>
-			</property>
-			<drop event="Harvest" name="resourceElectricParts" count="1" prob="0.2" tag="salvageHarvest"/>
-			<drop event="Destroy" name="resourceScrapPolymers" count="1,2"/>
-			<!-- setup placing behavior -->
-			<property name="WireOffset" value="0,0,-.5"/>
-			<property name="HandleFace" value="South"/>
-			<!-- setup custom model, icons and more -->
-			<property name="Model" value="#@modfolder:Resources/Lamps.unity3d?Lamp01Prefab" />
-			<property name="DescriptionKey" value="ocbLamp01Desc"/>
-			<property name="CustomIcon" value="ElectricityLamp01"/>
-			<property name="RequiredPower" value="3"/>
-		</block>
-
-		<block name="ocbLamp02">
-			<property name="Extends" value="ocbLamp01"/>
-			<property name="LightIntensity" value="0.8"/>
-			<property name="LightMaxIntensity" value="2.4"/>
-			<!-- set to point light with kelvins -->
+			<property name="FilterTags" value="fdecor,felectrical"/>
+			<!-- some other useful options for blocks -->
+			<property name="LPHardnessScale" value="2"/>
+			<property name="StabilitySupport" value="false"/>
+			<property name="ImposterDontBlock" value="true"/>
+			<property name="IsTerrainDecoration" value="false"/>
+			<property name="Collide" value="melee,bullet,arrow,rocket"/>
+			<!-- dont give ourself back -->
+			<drop event="Destroy" count="0"/>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="1"/>
 			<property name="LightMode" value="1"/>
-			<property name="LightKelvin" value="6000"/>
-			<!-- setup custom model, icons and more -->
-			<property name="Model" value="#@modfolder:Resources/Lamps.unity3d?Lamp02Prefab" />
-			<property name="DescriptionKey" value="ocbLamp02Desc"/>
-			<property name="CustomIcon" value="ElectricityLamp02"/>
-			<property name="RequiredPower" value="3"/>
-		</block>
-
-		<block name="ocbLamp03">
-			<property name="Extends" value="ocbLamp01"/>
-			<!-- set to spot light with kelvins -->
-			<property name="LightMode" value="3"/>
-			<property name="LightKelvin" value="4800"/>
-			<property name="LightIntensity" value="0.9"/>
-			<property name="LightMaxIntensity" value="1.4"/>
-			<!-- setup options for spot light -->
+			<property name="LightIntensity" value="1.0"/>
+			<property name="LightMinIntensity" value="0.2"/>
+			<property name="LightMaxIntensity" value="8.0"/>
+			<property name="LightIntensityStep" value="0.1"/>
+			<property name="LightRange" value="15"/>
+			<property name="LightMinRange" value="0"/>
+			<property name="LightMaxRange" value="50"/>
+			<property name="LightRangeStep" value="1"/>
+			<!-- only useful for spotlights -->
 			<property name="LightAngle" value="95"/>
-			<property name="LightMinAngle" value="75"/>
+			<property name="LightMinAngle" value="35"/>
 			<property name="LightMaxAngle" value="135"/>
 			<property name="LightAngleStep" value="5"/>
-			<!-- setup custom model, icons and more -->
-			<property name="Model" value="#@modfolder:Resources/Lamps.unity3d?Lamp03Prefab" />
-			<property name="DescriptionKey" value="ocbLamp03Desc"/>
-			<property name="CustomIcon" value="ElectricityLamp03"/>
+			<!-- Does this do something for LightLOD? -->
+			<!-- <property name="Light" value="0.5"/> -->
+			<!-- this setting ensures that the wrench does the right (visual) action -->
+			<drop event="Harvest" name="terrStone" count="0" tag="salvageHarvest" tool_category="Disassemble"/>
+			<!-- some base setup for later -->
+			<property name="Mesh" value="models"/>
+			<!-- the following can't be set on master block -->
+			<!-- <property name="Shape" value="ModelEntity" /> -->
+			<property name="Stacknumber" value="20"/>
+		</block>
+
+		<!-- Illuminated Signs -->
+		<block name="ocbSignLampMaster">
+			<property name="CreativeMode" value="None"/>
+			<property name="Extends" value="ocbLampMaster"/>
+			<property name="DescriptionKey" value="ocbSignLampDesc"/>
+			<property name="UnlockedBy" value="perkAdvancedEngineering,generatorbankSchematic"/>
+			<!-- setup damage and repair options -->
+			<property name="Material" value="Mglass"/>
+			<property name="MaxDamage" value="300"/>
+			<property class="RepairItems">
+				<property name="resourceBrokenGlass" value="2"/>
+				<property name="resourceForgedIron" value="2"/>
+				<property name="resourceElectricParts" value="2"/>
+			</property>
+			<drop event="Harvest" name="resourceBrokenGlass" count="1,4" tag="allHarvest"/>
+			<drop event="Harvest" name="resourceScrapPolymers" count="1,4" tag="salvageHarvest"/>
+			<drop event="Harvest" name="resourceElectricParts" count="1,4" tag="salvageHarvest" tool_category="Disassemble"/>
+			<drop event="Harvest" name="resourceForgedIron" count="1,4" tag="salvageHarvest" tool_category="Disassemble"/>
+			<drop event="Fall" name="scrapMetalPile" prob="0.75" stick_chance="1"/>
+			<!-- setup basic light options -->
+			<property name="LightIntensity" value="0.8"/>
+			<property name="LightMaxIntensity" value="1.8"/>
+			<property name="LightRange" value="5"/>
+			<property name="LightMaxRange" value="15"/>
 			<property name="RequiredPower" value="2"/>
+			<!-- economic values -->
+			<property name="EconomicValue" value="125"/>
+			<property name="Stacknumber" value="10"/>
+		</block>
+
+		<!-- Desk Lamps -->
+		<block name="ocbDeskLampMaster">
+			<property name="CreativeMode" value="None"/>
+			<property name="Extends" value="ocbLampMaster"/>
+			<property name="DescriptionKey" value="ocbDeskLampDesc"/>
+			<property name="UnlockedBy" value="perkAdvancedEngineering,generatorbankSchematic"/>
+			<!-- setup damage and repair options -->
+			<property name="Material" value="Mglass"/>
+			<property name="MaxDamage" value="300"/>
+			<property class="RepairItems">
+				<property name="resourceBrokenGlass" value="2"/>
+				<property name="resourceForgedIron" value="2"/>
+				<property name="resourceElectricParts" value="2"/>
+			</property>
+			<drop event="Harvest" name="resourceBrokenGlass" count="1,4" tag="allHarvest"/>
+			<drop event="Harvest" name="resourceElectricParts" count="1,2" tag="salvageHarvest"/>
+			<drop event="Harvest" name="resourceElectricParts" count="1,2" tag="salvageHarvest" tool_category="Disassemble"/>
+			<drop event="Harvest" name="resourceForgedIron" count="1,4" tag="salvageHarvest" tool_category="Disassemble"/>
+			<drop event="Fall" name="scrapMetalPile" prob="0.75" stick_chance="1"/>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="2"/>
+			<property name="LightIntensity" value="0.6"/>
+			<property name="LightMaxIntensity" value="1.2"/>
+			<property name="LightRange" value="5"/>
+			<property name="LightMaxRange" value="15"/>
+			<!-- economic values -->
+			<property name="EconomicValue" value="100"/>
+			<property name="Stacknumber" value="10"/>
+		</block>
+
+		<!-- Small Lamps -->
+		<block name="ocbSmallLampMaster">
+			<property name="CreativeMode" value="None"/>
+			<property name="Extends" value="ocbLampMaster"/>
+			<property name="UnlockedBy" value="perkAdvancedEngineering,generatorbankSchematic"/>
+			<!-- setup damage and repair options -->
+			<property name="MaxDamage" value="500"/>
+			<property class="RepairItems">
+				<property name="resourceBrokenGlass" value="4"/>
+				<property name="resourceForgedIron" value="2"/>
+				<property name="resourceElectricParts" value="4"/>
+			</property>
+			<drop event="Harvest" name="resourceBrokenGlass" count="1,4" tag="allHarvest"/>
+			<drop event="Harvest" name="resourceScrapPolymers" count="1,2" tag="salvageHarvest"/>
+			<drop event="Harvest" name="resourceElectricParts" count="1,2" tag="salvageHarvest"/>
+			<drop event="Harvest" name="resourceElectricParts" count="1,2" tag="salvageHarvest" tool_category="Disassemble"/>
+			<drop event="Harvest" name="resourceForgedIron" count="1,2" tag="salvageHarvest" tool_category="Disassemble"/>
+			<drop event="Fall" name="scrapMetalPile" prob="0.75" stick_chance="1"/>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="2"/>
+			<property name="LightIntensity" value="0.9"/>
+			<property name="LightMaxIntensity" value="1.4"/>
+			<property name="LightRange" value="10"/>
+			<property name="LightMaxRange" value="20"/>
+			<!-- economic values -->
+			<property name="EconomicValue" value="150"/>
+			<property name="Stacknumber" value="20"/>
+		</block>
+
+		<!-- Small Lamps facing Top -->
+		<block name="ocbSmallCeilLampMaster">
+			<property name="CreativeMode" value="None"/>
+			<property name="Extends" value="ocbSmallLampMaster"/>
+			<property name="DescriptionKey" value="ocbSmallCeilLampDesc"/>
+			<property name="HandleFace" value="Top"/>
+		</block>
+
+		<!-- Small Lamps facing West -->
+		<block name="ocbSmallWallLampMaster">
+			<property name="CreativeMode" value="None"/>
+			<property name="Extends" value="ocbSmallLampMaster"/>
+			<property name="DescriptionKey" value="ocbSmallWallLampDesc"/>
+			<property name="Material" value="Mmetal_thin"/>
+			<property name="HandleFace" value="West"/>
+		</block>
+
+		<!-- Medium Lamps -->
+		<block name="ocbMediumLampMaster">
+			<property name="CreativeMode" value="None"/>
+			<property name="Extends" value="ocbLampMaster"/>
+			<property name="UnlockedBy" value="perkAdvancedEngineering,generatorbankSchematic"/>
+			<!-- setup damage and repair options -->
+			<property name="MaxDamage" value="800"/>
+			<property class="RepairItems">
+				<property name="resourceBrokenGlass" value="4"/>
+				<property name="resourceForgedIron" value="2"/>
+				<property name="resourceElectricParts" value="4"/>
+			</property>
+			<drop event="Harvest" name="resourceScrapPolymers" count="1,2" tag="allHarvest"/>
+			<drop event="Harvest" name="resourceScrapPolymers" count="1,4" tag="salvageHarvest"/>
+			<drop event="Harvest" name="resourceElectricParts" count="1,2" tag="salvageHarvest"/>
+			<drop event="Harvest" name="resourceElectricParts" count="1,2" tag="salvageHarvest" tool_category="Disassemble"/>
+			<drop event="Harvest" name="resourceForgedIron" count="1,4" tag="salvageHarvest" tool_category="Disassemble"/>
+			<drop event="Harvest" name="resourceHeadlight" prop="0.3" tag="salvageHarvest" tool_category="Disassemble"/>
+			<drop event="Fall" name="scrapMetalPile" prob="0.75" stick_chance="1"/>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="3"/>
+			<property name="LightIntensity" value="0.8"/>
+			<property name="LightMaxIntensity" value="2.0"/>
+			<property name="LightRange" value="15"/>
+			<property name="LightMaxRange" value="25"/>
+			<!-- economic values -->
+			<property name="EconomicValue" value="200"/>
+			<property name="Stacknumber" value="10"/>
+		</block>
+
+		<!-- Medium Lamps facing Top -->
+		<block name="ocbMediumCeilLampMaster">
+			<property name="CreativeMode" value="None"/>
+			<property name="Extends" value="ocbMediumLampMaster"/>
+			<property name="DescriptionKey" value="ocbMediumCeilLampDesc"/>
+			<property name="HandleFace" value="Top"/>
+		</block>
+
+		<!-- Medium Lamps facing South -->
+		<block name="ocbMediumWallLampMaster">
+			<property name="CreativeMode" value="None"/>
+			<property name="Extends" value="ocbMediumLampMaster"/>
+			<property name="DescriptionKey" value="ocbMediumWallLampDesc"/>
+			<property name="HandleFace" value="South"/>
+		</block>
+
+		<!-- Special Lamps -->
+		<block name="ocbSpecialLampMaster">
+			<property name="CreativeMode" value="None"/>
+			<property name="Extends" value="ocbLampMaster"/>
+			<property name="UnlockedBy" value="perkAdvancedEngineering"/>
+			<property name="TakeDelay" value="15"/>
+			<!-- setup damage and repair options -->
+			<property name="Material" value="Msteel"/>
+			<property name="MaxDamage" value="2500"/>
+			<property class="RepairItems">
+				<property name="resourceForgedSteel" value="2"/>
+				<property name="resourceScrapPolymers" value="8"/>
+				<property name="resourceElectricParts" value="4"/>
+			</property>
+			<drop event="Harvest" name="resourceScrapPolymers" count="1,2" tag="allHarvest"/>
+			<drop event="Harvest" name="resourceScrapPolymers" count="2,6" tag="salvageHarvest"/>
+			<drop event="Harvest" name="resourceElectricParts" count="1,3" tag="salvageHarvest"/>
+			<drop event="Harvest" name="resourceElectricParts" count="1,3" tag="salvageHarvest" tool_category="Disassemble"/>
+			<drop event="Harvest" name="resourceForgedSteel" count="1,4" tag="salvageHarvest" tool_category="Disassemble"/>
+			<drop event="Harvest" name="resourceHeadlight" prop="0.6" tag="salvageHarvest" tool_category="Disassemble"/>
+			<drop event="Fall" name="scrapMetalPile" prob="0.75" stick_chance="1"/>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="6"/>
+			<property name="LightIntensity" value="1.6"/>
+			<property name="LightMaxIntensity" value="4.2"/>
+			<property name="LightRange" value="15"/>
+			<property name="LightMaxRange" value="30"/>
+			<!-- these blocks also collide with rockets -->
+			<property name="Collide" value="melee,bullet,arrow,rocket,movement"/>
+			<!-- economic values -->
+			<property name="EconomicValue" value="300"/>
+			<property name="Stacknumber" value="5"/>
+		</block>
+
+		<!-- Special Lamps facing Top -->
+		<block name="ocbSpecialCeilLampMaster">
+			<property name="CreativeMode" value="None"/>
+			<property name="Extends" value="ocbSpecialLampMaster"/>
+			<property name="DescriptionKey" value="ocbSpecialCeilLampDesc"/>
+			<property name="HandleFace" value="Top"/>
+		</block>
+
+		<!-- Special Lamps facing Down -->
+		<block name="ocbSpecialGroundLampMaster">
+			<property name="CreativeMode" value="None"/>
+			<property name="Extends" value="ocbSpecialLampMaster"/>
+			<property name="DescriptionKey" value="ocbSpecialGroundLampDesc"/>
+			<drop event="Harvest" name="resourceForgedSteel" count="2,6" tag="salvageHarvest" tool_category="Disassemble"/>
+			<property name="ActivationDistance" value="6"/>
+			<property name="HandleFace" value="Bottom"/>
+			<!-- economic values -->
+			<property name="EconomicValue" value="500"/>
+			<property name="Stacknumber" value="5"/>
+			<property name="MaxDamage" value="5000"/>
 		</block>
 
 	</append>
+	<!-- END BASE BLOCK TYPES -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START NEW BLOCK MODELS -->
+	<append xpath="/blocks">
+
+		<!-- Round lamp -->
+		<block name="ocbCustomLight01">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSmallWallLampMaster"/>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="3"/>
+			<property name="LightKelvin" value="3200"/>
+			<property name="LightIntensity" value="0.8"/>
+			<property name="LightMaxIntensity" value="1.8"/>
+			<!-- setup custom model, icons and more -->
+			<property name="Shape" value="ModelEntity" />
+			<property name="Model" value="#@modfolder:Resources/Lamps.unity3d?Lamp01Prefab" />
+			<property name="DescriptionKey" value="ocbCustomLight01Desc"/>
+			<property name="CustomIcon" value="ElectricityLamp01"/>
+			<property name="WireOffset" value="0,0,-.5"/>
+		</block>
+
+		<!-- Neon tube lamp  -->
+		<block name="ocbCustomLight02">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbMediumWallLampMaster"/>
+			<!-- set to spot light with kelvins -->
+			<property name="RequiredPower" value="3"/>
+			<property name="LightKelvin" value="6000"/>
+			<property name="LightIntensity" value="0.8"/>
+			<property name="LightMaxIntensity" value="2.4"/>
+			<!-- setup custom model, icons and more -->
+			<property name="Shape" value="ModelEntity" />
+			<property name="Model" value="#@modfolder:Resources/Lamps.unity3d?Lamp02Prefab" />
+			<property name="DescriptionKey" value="ocbCustomLight02Desc"/>
+			<property name="CustomIcon" value="ElectricityLamp02"/>
+		</block>
+
+		<!-- Recessed spotlight -->
+		<block name="ocbCustomLight03">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbMediumCeilLampMaster"/>
+			<!-- set to spotlight mode with kelvins -->
+			<property name="LightMode" value="3"/>
+			<property name="RequiredPower" value="2"/>
+			<property name="LightKelvin" value="4800"/>
+			<property name="LightIntensity" value="0.9"/>
+			<property name="LightMaxIntensity" value="1.4"/>
+			<!-- setup options for spotlight -->
+			<property name="LightAngle" value="95"/>
+			<property name="LightMaxAngle" value="135"/>
+			<!-- setup custom model, icons and more -->
+			<property name="Shape" value="ModelEntity" />
+			<property name="Model" value="#@modfolder:Resources/Lamps.unity3d?Lamp03Prefab" />
+			<property name="DescriptionKey" value="ocbCustomLight03Desc"/>
+			<property name="CustomIcon" value="ElectricityLamp03"/>
+		</block>
+
+	</append>
+	<!-- END NEW BLOCK MODELS -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START SIGN LAMPS GROUP -->
+	<append xpath="/blocks">
+
+		<!-- Small exit sign -->
+		<block name="ocbExitSign01">
+			<property name="WireOffset" value="0,.4,-.45"/>
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSignLampMaster"/>
+			<property name="CustomIcon" value="signExitLight"/>
+			<property name="Model" value="Entities/Lighting/exit_signPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="3600"/>
+		</block>
+
+		<!-- Medium open sign -->
+		<block name="ocbOpenSign01">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSignLampMaster"/>
+			<property name="CustomIcon" value="signShopOpenSwitch"/>
+			<property name="Model" value="Entities/Signs/sign_open_Prefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="2"/>
+			<property name="LightKelvin" value="3600"/>
+			<property name="LightIntensity" value="0.8"/>
+			<property name="LightMaxIntensity" value="2.2"/>
+			<property name="LightRange" value="20"/>
+			<property name="LightMaxRange" value="30"/>
+		</block>
+
+	</append>
+	<!-- END SIGN LAMPS GROUP -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START DESK LAMPS GROUP -->
+	<append xpath="/blocks">
+
+		<!-- Small green desk lamp -->
+		<block name="ocbDeskLamp01">
+			<property name="WireOffset" value=".36,-.425,0"/>
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbDeskLampMaster"/>
+			<property name="CustomIcon" value="deskLampLight"/>
+			<property name="Model" value="Entities/Lighting/desk_lampPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="3200"/>
+			<property name="LightModeLocked" value="true"/>
+		</block>
+
+		<!-- Small desk lamp vase -->
+		<block name="ocbTableLamp01">
+			<property name="WireOffset" value="0,-.425,.3"/>
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbDeskLampMaster"/>
+			<property name="CustomIcon" value="tableLampLight"/>
+			<property name="Model" value="Entities/Lighting/table_lampPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="3500"/>
+		</block>
+
+	</append>
+	<!-- END DESK LAMPS GROUP -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START SMALL CEILING LAMPS GROUP -->
+	<append xpath="/blocks">
+
+		<!-- Small simple light bulb in socket -->
+		<block name="ocbCeilingLight01">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSmallCeilLampMaster"/>
+			<property name="CustomIcon" value="ceilingLight01"/>
+			<property name="Model" value="Entities/Lighting/player_ceilingLight01Prefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="4600"/>
+			<property name="Material" value="Mglass"/>
+		</block>
+
+		<!-- Small bulb with ceiling lampshade white -->
+		<block name="ocbCeilingLight04">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSmallCeilLampMaster"/>
+			<property name="CustomIcon" value="ceilingLight04"/>
+			<property name="Model" value="Entities/Lighting/ceilingLight04Prefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightMode" value="3"/>
+			<property name="LightKelvin" value="4200"/>
+		</block>
+
+		<!-- Small bulb with ceiling lampshade black -->
+		<block name="ocbCeilingLight05">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSmallCeilLampMaster"/>
+			<property name="CustomIcon" value="ceilingLight05"/>
+			<property name="Model" value="Entities/Lighting/ceilingLight05Prefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="4400"/>
+		</block>
+
+		<!-- Small bulb with ceiling lampshade brass -->
+		<block name="ocbCeilingLight06">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSmallCeilLampMaster"/>
+			<property name="CustomIcon" value="ceilingLight05Brass"/>
+			<property name="Model" value="Entities/Lighting/ceilingLight05BrassPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="4000"/>
+		</block>
+
+		<!-- Small recessed spotlight -->
+		<block name="ocbRecessedLight01">
+			<property name="WireOffset" value="0,.495,0"/>
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSmallCeilLampMaster"/>
+			<property name="CustomIcon" value="recessedLight"/>
+			<property name="Model" value="Entities/Lighting/recessedLightPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="4300"/>
+		</block>
+
+	</append>
+	<!-- END SMALL CEILING LAMPS GROUP -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START SMALL WALL LAMPS GROUP -->
+	<append xpath="/blocks">
+
+		<!-- Small bulb in casing for outdoor rusted -->
+		<block name="ocbPorchLight01">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSmallWallLampMaster"/>
+			<property name="CustomIcon" value="porchLight01"/>
+			<property name="Model" value="Entities/Lighting/porchLight01Prefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="3900"/>
+		</block>
+
+		<!-- Small bulb in casing for outdoor black -->
+		<block name="ocbPorchLight02">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSmallWallLampMaster"/>
+			<property name="CustomIcon" value="porchLight04"/>
+			<property name="Model" value="Entities/Lighting/porchLight04Prefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="3900"/>
+		</block>
+
+		<!-- Small bulb in casing for outdoor brass -->
+		<block name="ocbPorchLight03">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSmallWallLampMaster"/>
+			<property name="CustomIcon" value="porchLight04Brass"/>
+			<property name="Model" value="Entities/Lighting/porchLight04BrassPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="3900"/>
+		</block>
+
+	</append>
+	<!-- END SMALL WALL LAMPS GROUP -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START MEDIUM CEILING LAMPS GROUP -->
+	<append xpath="/blocks">
+
+		<!-- Medium round ceiling/wall lamp black -->
+		<block name="ocbCeilingLight02">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbMediumCeilLampMaster"/>
+			<property name="CustomIcon" value="ceilingLight02"/>
+			<property name="Model" value="Entities/Lighting/ceilingLight02Prefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="4000"/>
+		</block>
+
+		<!-- Medium round ceiling/wall lamp brass -->
+		<block name="ocbCeilingLight03">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbMediumCeilLampMaster"/>
+			<property name="CustomIcon" value="ceilingLight02Brass"/>
+			<property name="Model" value="Entities/Lighting/ceilingLight02BrassPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="4000"/>
+		</block>
+
+		<!-- Medium corner light -->
+		<block name="ocbSconceLight01">
+			<property name="WireOffset" value="-.49,.49,0"/>
+			<property name="ModelOffset" value="0,.626,0"/>
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbMediumCeilLampMaster"/>
+			<property name="CustomIcon" value="sconce1Light"/>
+			<property name="Model" value="Entities/Lighting/sconce_1_Prefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="2"/>
+			<property name="LightKelvin" value="4400"/>
+			<property name="LightRange" value="10"/>
+			<property name="LightMaxRange" value="20"/>
+		</block>
+
+		<!-- Medium double ceiling neon tube light-->
+		<block name="ocbSconceLight07">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbMediumCeilLampMaster"/>
+			<property name="CustomIcon" value="ceilingLight07"/>
+			<property name="Model" value="Entities/Lighting/ceilingLight07Prefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="5800"/>
+			<property name="LightIntensity" value="1.2"/>
+			<property name="LightMaxIntensity" value="2.2"/>
+		</block>
+
+		<!-- Medium bulb in encasing (white) -->
+		<block name="ocbIndustrialLight02">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbMediumCeilLampMaster"/>
+			<property name="CustomIcon" value="industrialLight02"/>
+			<property name="Model" value="Entities/Lighting/industrial_light_02Prefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="4000"/>
+			<property name="LightIntensity" value="1.2"/>
+		</block>
+
+		<!-- Medium bulb in encasing (red) -->
+		<block name="ocbIndustrialLight03">
+			<property name="WireOffset" value="0,.495,0"/>
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbMediumCeilLampMaster"/>
+			<property name="CustomIcon" value="industrialLight02Red"/>
+			<property name="Model" value="Entities/Lighting/industrial_light_02_redPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="4000"/>
+			<property name="LightIntensity" value="1.2"/>
+		</block>
+
+	</append>
+	<!-- END MEDIUM CEILING LAMPS GROUP -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START MEDIUM WALL LAMPS GROUP -->
+	<append xpath="/blocks">
+
+		<!-- Big double square box light -->
+		<block name="ocbIndustrialLight01">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbMediumWallLampMaster"/>
+			<property name="CustomIcon" value="industrialLight01"/>
+			<!-- Note: Model is facing in the wrong direction (up vs down)-->
+			<property name="Model" value="Entities/Lighting/industrialLight01Prefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="4"/>
+			<property name="LightKelvin" value="6400"/>
+			<property name="LightIntensity" value="1.2"/>
+			<property name="LightMaxIntensity" value="2.8"/>
+			<property name="LightMaxRange" value="30"/>
+		</block>
+
+		<!-- Small outdoor lamp with gooseneck -->
+		<block name="ocbWallLight01">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbMediumWallLampMaster"/>
+			<property name="CustomIcon" value="wallLight01"/>
+			<!-- Note: Model is facing in the wrong direction (up vs down)-->
+			<property name="Model" value="Entities/Lighting/wall_light01Prefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="3900"/>
+		</block>
+
+	</append>
+	<!-- END MEDIUM WALL LAMPS GROUP -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START SPECIAL CEILING LAMPS GROUP -->
+	<append xpath="/blocks">
+
+		<!-- Big ceiling fan lamp -->
+		<block name="ocbCeilingFanLight01">
+			<property name="WireOffset" value="0,.525,0"/>
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSpecialCeilLampMaster"/>
+			<property name="CustomIcon" value="ceilingFanLight"/>
+			<property name="Model" value="Entities/Lighting/ceiling_fanPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="3700"/>
+			<property name="LightIntensity" value="1.6"/>
+			<property name="LightMaxIntensity" value="3.4"/>
+		</block>
+
+		<!-- Big ceiling quadruple neon tube -->
+		<block name="ocbFluorescentLight01">
+			<property name="WireOffset" value="0,0,2.5"/>
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSpecialCeilLampMaster"/>
+			<property name="CustomIcon" value="fluorescentLight"/>
+			<property name="Model" value="Entities/Lighting/fluorescentLightPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="6500"/>
+			<property name="LightIntensity" value="2.8"/>
+			<property name="LightMaxIntensity" value="5.6"/>
+			<!-- additional custom settings -->
+			<property name="DisplayType" value="blockMulti"/>
+			<property name="MultiBlockDim" value="1,1,2"/>
+		</block>
+
+		<!-- Big tripple halogen track light -->
+		<block name="ocbTrackLight01">
+			<property name="WireOffset" value="2,4,5"/>
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSpecialCeilLampMaster"/>
+			<property name="CustomIcon" value="trackLight"/>
+			<property name="Model" value="Entities/Lighting/trackLightPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="3400"/>
+			<property name="LightIntensity" value="2.2"/>
+			<property name="LightMaxIntensity" value="6.4"/>
+			<!-- additional custom settings -->
+			<property name="DisplayType" value="blockMulti"/>
+			<property name="MultiBlockDim" value="1,1,3"/>
+		</block>
+
+		<!-- Big ceiling chandelier with 9 bulbs -->
+		<block name="ocbChandelierLight01">
+			<property name="WireOffset" value="0,1.35,0"/>
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSpecialCeilLampMaster"/>
+			<property name="CustomIcon" value="chandelierLight"/>
+			<property name="Model" value="Entities/Lighting/chandelierPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="5"/>
+			<property name="LightModeLocked" value="true"/>
+			<property name="LightKelvin" value="3800"/>
+			<property name="LightIntensity" value="1.2"/>
+			<property name="LightMaxIntensity" value="2.8"/>
+			<property name="LightRange" value="10"/>
+			<!-- additional custom settings -->
+			<property name="DisplayType" value="blockMulti"/>
+			<!-- Invert to make sticky part on top -->
+			<property name="MultiBlockDim" value="3,-2,3"/>
+			<property name="ModelOffset" value="0,-.65,0"/>
+			<!-- ToDo: check sorting, filtering and grouping of others -->
+			<property name="Group" value="Science,Decor/Miscellaneous"/>
+			<property name="FilterTags" value="fdecor,felectrical,fother,ffurniture"/>
+		</block>
+
+	</append>
+	<!-- END SPECIAL CEILING LAMPS GROUP -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START SPECIAL GROUND LAMPS GROUP -->
+	<append xpath="/blocks">
+
+		<!-- Special construction site light -->
+		<block name="ocbWorkLight01">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSpecialGroundLampMaster"/>
+			<property name="CustomIcon" value="workLightPOI"/>
+			<property name="Model" value="Entities/Lighting/work_lightPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="8"/>
+			<property name="LightKelvin" value="5200"/>
+			<property name="LightIntensity" value="1.8"/>
+			<property name="LightMaxIntensity" value="4.2"/>
+			<property name="LightRange" value="15"/>
+			<property name="LightMaxRange" value="25"/>
+			<!-- additional custom settings -->
+			<property name="DisplayType" value="blockMulti"/>
+			<property name="MultiBlockDim" value="1,2,1"/>
+			<!-- <property name="Place" value="TowardsPlacerInverted"/> -->
+		</block>
+
+		<!-- Special big outdoor street lamp post -->
+		<block name="ocbMastLamp01">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSpecialGroundLampMaster"/>
+			<property name="CustomIcon" value="streetLightClassic"/>
+			<property name="Model" value="Entities/Lighting/streetLamp_ClassicPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="8"/>
+			<property name="LightKelvin" value="4300"/>
+			<property name="LightIntensity" value="3.2"/>
+			<property name="LightMaxIntensity" value="5.6"/>
+			<property name="LightRange" value="20"/>
+			<property name="LightMaxRange" value="40"/>
+			<property name="Light" value="5"/>
+			<!-- additional custom settings -->
+			<property name="DisplayType" value="blockMulti"/>
+			<property name="MultiBlockDim" value="1,5,1"/>
+
+			<!-- <property name="ImposterExchange" value="imposterDontBlockCTRPole" param1="169"/> -->
+			<!-- <property name="MaxDamage" value="5000"/> -->
+		</block>
+
+		<!-- Special big street lamp upper part -->
+		<block name="ocbStreetLight01">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSpecialGroundLampMaster"/>
+			<property name="CustomIcon" value="streetLight01"/>
+			<property name="Model" value="Entities/Lighting/street_light01Prefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="10"/>
+			<property name="LightKelvin" value="7200"/>
+			<property name="LightIntensity" value="3.6"/>
+			<property name="LightMaxIntensity" value="7.2"/>
+			<property name="LightRange" value="25"/>
+			<property name="LightMaxRange" value="50"/>
+			<property name="Light" value="25"/>
+			<!-- additional custom settings -->
+			<property name="DisplayType" value="blockMulti"/>
+			<!--
+				// Multi-dim blocks can't be rotated 45°
+				// 3,1,1 dim blocks can't be placed correctly
+				// Block will always want to be center
+				// Doesn't work on lamp post tops
+				<property name="MultiBlockDim" value="2,1,1"/>
+				<property name="ModelOffset" value=".5,.5,0"/>
+			-->
+			<property name="MultiBlockDim" value="1,1,1"/>
+			<!--
+			<property name="Material" value="Msteel"/>
+			<property name="MaxDamage" value="5000"/>
+			-->
+		</block>
+		
+	</append>
+	<!-- END SPECIAL GROUND LAMPS GROUP -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START STANDALONE BLOCK TYPES -->
+	<append xpath="/blocks">
+
+		<!-- self powered red mining lantern -->
+		<block name="ocbLanternLamp">
+			<property name="Extends" value="ocbLampMaster"/>
+			<property name="CustomIcon" value="lanternDecorLight"/>
+			<property name="Collide" value="melee,bullet,arrow,rocket,movement"/>
+			<property name="Model" value="Entities/Lighting/lanternPlayerPrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+			<!-- setup damage and repair options -->
+			<property name="MaxDamage" value="750"/>
+			<property class="RepairItems">
+				<property name="resourceForgedIron" value="2"/>
+				<property name="resourceScrapPolymers" value="4"/>
+				<property name="resourceElectricParts" value="2"/>
+			</property>
+			<!-- a bit wired, we can connect, but not turn off -->
+			<property name="RequiredPower" value="0"/>
+			<property name="PowerDontConnect" value="1"/>
+			<!-- setup basic light options -->
+			<property name="LightKelvin" value="5200"/>
+			<property name="LightIntensity" value="0.6"/>
+			<property name="LightMaxIntensity" value="0.8"/>
+			<property name="LightRange" value="5"/>
+			<property name="LightMaxRange" value="10"/>
+			<!-- additional custom settings -->
+			<property name="Material" value="Mglass"/>
+			<property name="UnlockedBy" value="perkArtOfMiningLantern"/>
+			<property name="Group" value="Science,Building,advBuilding"/>
+			<property name="HandleFace" value="Bottom"/>
+			<property name="Material" value="Mglass"/>
+			<property name="EconomicValue" value="600"/>
+			<property name="Stacknumber" value="8"/>
+		</block>
+
+		<!-- big road barricade -->
+		<block name="ocbRoadBarricade">
+			<property name="Extends" value="ocbLampMaster"/>
+			<property name="CustomIcon" value="roadBarricadeLight"/>
+			<property name="Collide" value="melee,bullet,arrow,rocket,movement"/>
+			<property name="Model" value="Entities/Signs/barricadePrefab"/>
+			<property name="Shape" value="ModelEntity"/>
+
+			<!-- <property name="Place" value="TowardsPlacerInverted"/> -->
+			<!-- setup damage and repair options -->
+			<property name="MaxDamage" value="7500"/>
+			<property class="RepairItems">
+				<property name="resourceForgedSteel" value="8"/>
+				<property name="resourceScrapPolymers" value="8"/>
+				<property name="resourceElectricParts" value="4"/>
+			</property>
+			<!-- setup basic light options -->
+			<property name="RequiredPower" value="5"/>
+			<property name="LightKelvin" value="2800"/>
+			<property name="LightIntensity" value="2.2"/>
+			<property name="LightMaxIntensity" value="3.6"/>
+			<property name="LightRange" value="25"/>
+			<property name="LightMaxRange" value="50"/>
+			<!-- additional custom settings -->
+			<property name="OnlySimpleRotations" value="true"/>
+			<property name="UnlockedBy" value="perkTechJunkie8Complete"/>
+			<property name="DisplayType" value="blockMulti"/>
+			<property name="MultiBlockDim" value="3,2,1"/>
+			<property name="HandleFace" value="Bottom"/>
+			<property name="Material" value="Msteel"/>
+			<property name="EconomicValue" value="900"/>
+			<property name="Stacknumber" value="4"/>
+		</block>
+
+	</append>
+	<!-- END STANDALONE BLOCK TYPES -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- START MULTI-SHAPE BLOCK HELPERS -->
+	<append xpath="/blocks">
+
+		<block name="ocbSignLampVariantHelper">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSignLampMaster" param1="DescriptionKey"/>
+			<property name="DescriptionKey" value="ocbSignLampVariantHelperDesc"/>
+			<property name="CustomIcon" value="signShopOpenSwitch"/>
+			<property name="SelectAlternates" value="true"/>
+			<property name="ItemTypeIcon" value="all_blocks"/>
+			<property name="PlaceAltBlockValue" value="ocbExitSign01,ocbOpenSign01"/>
+		</block>
+
+		<block name="ocbDeskLampVariantHelper">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbDeskLampMaster" param1="DescriptionKey"/>
+			<property name="DescriptionKey" value="ocbDeskLampVariantHelperDesc"/>
+			<property name="CustomIcon" value="deskLampLight"/>
+			<property name="SelectAlternates" value="true"/>
+			<property name="ItemTypeIcon" value="all_blocks"/>
+			<property name="PlaceAltBlockValue" value="ocbDeskLamp01,ocbTableLamp01"/>
+			<property name="AllowAllRotations" value="true"/>
+		</block>
+
+		<block name="ocbSmallCeilLampVariantHelper">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSmallCeilLampMaster" param1="DescriptionKey"/>
+			<property name="DescriptionKey" value="ocbSmallCeilLampVariantHelperDesc"/>
+			<property name="CustomIcon" value="ceilingLight01"/>
+			<property name="SelectAlternates" value="true"/>
+			<property name="ItemTypeIcon" value="all_blocks"/>
+			<property name="PlaceAltBlockValue" value="ocbCeilingLight01,ocbCeilingLight04,ocbCeilingLight05,ocbCeilingLight06,ocbRecessedLight01"/>
+		</block>
+
+		<block name="ocbSmallWallLampVariantHelper">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSmallWallLampMaster" param1="DescriptionKey"/>
+			<property name="DescriptionKey" value="ocbSmallWallLampVariantHelperDesc"/>
+			<property name="CustomIcon" value="porchLight04"/>
+			<property name="SelectAlternates" value="true"/>
+			<property name="ItemTypeIcon" value="all_blocks"/>
+			<property name="PlaceAltBlockValue" value="ocbPorchLight01,ocbPorchLight02,ocbPorchLight03,ocbCustomLight01"/>
+		</block>
+
+		<block name="ocbMediumCeilLampVariantHelper">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbMediumCeilLampMaster" param1="DescriptionKey"/>
+			<property name="DescriptionKey" value="ocbMediumCeilLampVariantHelperDesc"/>
+			<property name="CustomIcon" value="ceilingLight02"/>
+			<property name="SelectAlternates" value="true"/>
+			<property name="ItemTypeIcon" value="all_blocks"/>
+			<property name="PlaceAltBlockValue" value="ocbCeilingLight02,ocbCeilingLight03,ocbSconceLight01,ocbIndustrialLight02,ocbIndustrialLight03,ocbSconceLight07,ocbCustomLight03"/>
+		</block>
+
+		<block name="ocbMediumWallLampVariantHelper">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbMediumWallLampMaster" param1="DescriptionKey"/>
+			<property name="DescriptionKey" value="ocbMediumWallLampVariantHelperDesc"/>
+			<property name="CustomIcon" value="industrialLight01"/>
+			<property name="SelectAlternates" value="true"/>
+			<property name="ItemTypeIcon" value="all_blocks"/>
+			<property name="PlaceAltBlockValue" value="ocbIndustrialLight01,ocbWallLight01,ocbCustomLight02"/>
+		</block>
+
+		<block name="ocbSpecialCeilLampVariantHelper">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSpecialCeilLampMaster" param1="DescriptionKey"/>
+			<property name="DescriptionKey" value="ocbSpecialCeilLampVariantHelperDesc"/>
+			<property name="CustomIcon" value="ceilingFanLight"/>
+			<property name="SelectAlternates" value="true"/>
+			<property name="ItemTypeIcon" value="all_blocks"/>
+			<property name="PlaceAltBlockValue" value="ocbCeilingFanLight01,ocbChandelierLight01,ocbFluorescentLight01,ocbTrackLight01"/>
+			<!-- <property name="OnlySimpleRotations" value="true"/> -->
+		</block>
+
+		<block name="ocbSpecialGroundLampVariantHelper">
+			<property name="CreativeMode" value="Player"/>
+			<property name="Extends" value="ocbSpecialGroundLampMaster" param1="DescriptionKey"/>
+			<property name="DescriptionKey" value="ocbSpecialGroundLampVariantHelperDesc"/>
+			<property name="CustomIcon" value="workLightPOI"/>
+			<property name="SelectAlternates" value="true"/>
+			<property name="ItemTypeIcon" value="all_blocks"/>
+			<property name="PlaceAltBlockValue" value="ocbWorkLight01,ocbMastLamp01,ocbStreetLight01"/>
+			<property name="OnlySimpleRotations" value="true"/>
+			<property name="AllowAllRotations" value="true"/>
+		</block>
+
+	</append>
+	<!-- END MULTI-SHAPE BLOCK HELPERS -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
+
+	<!-- For very adventurous, changes every light in the whole world to be our (currently switches off every light until you power it yourself - no free energy) -->
+	<!-- <setattribute xpath="/blocks/block/property[@name='Class' and @value='Light']" name="value">ElectricityLight, Harmony-ElectricityLamps</setattribute> -->
+
+	<!--####################################################################-->
+	<!--####################################################################-->
 
 </configs>

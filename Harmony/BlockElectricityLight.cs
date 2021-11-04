@@ -66,7 +66,6 @@ public class BlockElectricityLight : BlockPowered
             _player.AimingGun = false;
             if (tileEntity == null) return false;
             Vector3i worldPos = tileEntity.ToWorldPos();
-        Log.Out("I am Here baby, lock " + worldPos);
             _world.GetGameManager().TELockServer(_cIdx, worldPos, tileEntity.entityId, _player.entityId);
             return true;
         case 2:

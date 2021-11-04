@@ -4,6 +4,8 @@ using UnityEngine;
 public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
 {
 
+    private static bool warnOnce = true;
+
     private static ushort defKelvin = 3200;
 
     private static Color defColor = KelvinToColor(defKelvin);
@@ -65,6 +67,10 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
     float lightRotationRa = 0f;
     float lightRotationDec = 0f;
 
+    // Mode can be locked per block variant
+    // Can't be changed on runtime
+    bool isModeLocked = false;
+
     public TileEntityElectricityLightBlock(Chunk _chunk) :
         base(_chunk)
     {}
@@ -91,6 +97,8 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
             180f : StringParsers.ParseFloat(props.Values["LightMaxAngle"]);
         this.lightAngleStep = !props.Values.ContainsKey("LightAngleStep") ?
             3f : StringParsers.ParseFloat(props.Values["LightAngleStep"]);
+        this.isModeLocked = !props.Values.ContainsKey("LightModeLocked") ?
+            false : StringParsers.ParseBool(props.Values["LightModeLocked"]);
         if (this.chunk == null) return;
         BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
         if (blockEntity != null) this.UpdateLightState(blockEntity);
@@ -135,6 +143,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
     public bool IsColorScale => (this.lightMode & 1) != 1;
     public bool IsSpotLight => (this.lightMode & 2) == 2;
     public bool IsPointLight => (this.lightMode & 2) != 2;
+    public bool IsModeLocked => this.isModeLocked;
 
     public Color LightColor
     {
@@ -206,6 +215,17 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
     public float MaxLightIntensity => this.lightMaxIntensity;
     public float LightIntensityStep => this.lightIntensityStep;
 
+    private void UpdateLightLOD(LightLOD lod, Color color, float intensity, float range, float angle)
+    {
+        lod.SetEmissiveColor(color * intensity);
+        lod.MaxIntensity = intensity;
+        if (lod.GetLight() is Light light) {
+            lod.SetRange(range);
+            light.spotAngle = angle;
+            light.color = color;
+        }
+    }
+
     public void UpdateLightState(BlockEntityData blockEntity)
     {
 
@@ -228,15 +248,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         {
             if (transform1.GetComponent<LightLOD>() is LightLOD component)
             {
-                component.SetEmissiveColor(color * intensity);
-                component.MaxIntensity = intensity;
-                if (component.GetLight() is Light light) {
-                    light.range = range;
-                    if (tileEntity.IsSpotLight) {
-                        light.spotAngle = angle;
-                    }
-                    light.color = color;
-                }
+                UpdateLightLOD(component, color, intensity, range, angle);
                 component.SwitchOnOff(_isOn);
             }
         }
@@ -251,7 +263,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         {
             if (transform3.GetComponent<MeshRenderer>() is MeshRenderer component) {
                 if (component.material != null) {
-                    component.material.SetColor("_EmissionColor", color * intensity * 1.25f);
+                    component.material.SetColor("_EmissionColor", color * intensity * 1.5f);
                     if (_isOn) component.material.EnableKeyword("_EMISSION");
                     else component.material.DisableKeyword("_EMISSION");
                 }
@@ -260,15 +272,21 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         }
         if (blockEntity.transform.Find("ExtraPointLight") is Transform transform4)
         {
+			if (warnOnce) Log.Warning("LightLOD => Light Model has ExtraPointLight");
             if (transform4.GetComponent<LightLOD>() is LightLOD component) {
+                UpdateLightLOD(component, color, intensity, range, angle);
                 component.SwitchOnOff(_isOn);
             }
+            warnOnce = false;
         }
         if (blockEntity.transform.Find("Point light") is Transform transform5)
         {
+			if (warnOnce) Log.Warning("LightLOD => Light Model has Point Light");
             if (transform5.GetComponent<LightLOD>() is LightLOD component) {
+                UpdateLightLOD(component, color, intensity, range, angle);
                 component.SwitchOnOff(_isOn);
             }
+            warnOnce = false;
         }
     }
 
