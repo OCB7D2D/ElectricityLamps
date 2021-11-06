@@ -6,6 +6,8 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
 
     private static bool warnOnce = true;
 
+    private static Vector3 nullVector;
+
     private static ushort defKelvin = 3200;
 
     private static Color defColor = KelvinToColor(defKelvin);
@@ -67,6 +69,9 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
     float lightRotationRa = 0f;
     float lightRotationDec = 0f;
 
+    bool isReLightReRotated = false;
+    Vector3 lightOrientation = new Vector3();
+
     // Mode can be locked per block variant
     // Can't be changed on runtime
     bool isModeLocked = false;
@@ -99,6 +104,9 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
             3f : StringParsers.ParseFloat(props.Values["LightAngleStep"]);
         this.isModeLocked = !props.Values.ContainsKey("LightModeLocked") ?
             false : StringParsers.ParseBool(props.Values["LightModeLocked"]);
+        this.isReLightReRotated = props.Values.ContainsKey("LightOrientation"); 
+        this.lightOrientation = !isReLightReRotated ? nullVector :
+            StringParsers.ParseVector3(props.Values["LightOrientation"]);
         if (this.chunk == null) return;
         BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
         if (blockEntity != null) this.UpdateLightState(blockEntity);
@@ -223,6 +231,10 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
             lod.SetRange(range);
             light.spotAngle = angle;
             light.color = color;
+            // Force the specific type
+            light.type = IsPointLight
+                ? LightType.Point
+                : LightType.Spot;
         }
     }
 
@@ -246,6 +258,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
 
         if (blockEntity.transform.Find("MainLight") is Transform transform1)
         {
+            if (isReLightReRotated) transform1.localEulerAngles  = lightOrientation;
             if (transform1.GetComponent<LightLOD>() is LightLOD component)
             {
                 UpdateLightLOD(component, color, intensity, range, angle);
@@ -274,6 +287,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         {
 			if (warnOnce) Log.Warning("LightLOD => Light Model has ExtraPointLight");
             if (transform4.GetComponent<LightLOD>() is LightLOD component) {
+                if (isReLightReRotated) transform4.localEulerAngles = lightOrientation;
                 UpdateLightLOD(component, color, intensity, range, angle);
                 component.SwitchOnOff(_isOn);
             }
@@ -283,6 +297,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         {
 			if (warnOnce) Log.Warning("LightLOD => Light Model has Point Light");
             if (transform5.GetComponent<LightLOD>() is LightLOD component) {
+                if (isReLightReRotated) transform5.localEulerAngles = lightOrientation;
                 UpdateLightLOD(component, color, intensity, range, angle);
                 component.SwitchOnOff(_isOn);
             }

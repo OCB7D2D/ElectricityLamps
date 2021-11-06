@@ -645,9 +645,16 @@
 			<property name="Model" value="Entities/Lighting/ceiling_fanPrefab"/>
 			<property name="Shape" value="ModelEntity"/>
 			<!-- setup basic light options -->
+			<property name="LightMode" value="3"/>
 			<property name="LightKelvin" value="3700"/>
 			<property name="LightIntensity" value="1.6"/>
 			<property name="LightMaxIntensity" value="3.4"/>
+			<property name="LightAngle" value="135"/>
+			<property name="LightMinAngle" value="65"/>
+			<property name="LightMaxAngle" value="165"/>
+			<property name="LightOrientation" value="90,0,0"/>
+			<!-- additional custom settings -->
+			<property name="ActivationDistance" value="4"/>
 		</block>
 
 		<!-- Big ceiling quadruple neon tube -->
@@ -663,6 +670,7 @@
 			<property name="LightIntensity" value="2.8"/>
 			<property name="LightMaxIntensity" value="5.6"/>
 			<!-- additional custom settings -->
+			<property name="ActivationDistance" value="4"/>
 			<property name="DisplayType" value="blockMulti"/>
 			<property name="MultiBlockDim" value="1,1,2"/>
 		</block>
@@ -680,6 +688,7 @@
 			<property name="LightIntensity" value="2.2"/>
 			<property name="LightMaxIntensity" value="6.4"/>
 			<!-- additional custom settings -->
+			<property name="ActivationDistance" value="4"/>
 			<property name="DisplayType" value="blockMulti"/>
 			<property name="MultiBlockDim" value="1,1,3"/>
 		</block>
@@ -694,6 +703,7 @@
 			<property name="Shape" value="ModelEntity"/>
 			<!-- setup basic light options -->
 			<property name="RequiredPower" value="5"/>
+			<property name="LightMode" value="1"/>
 			<property name="LightModeLocked" value="true"/>
 			<property name="LightKelvin" value="3800"/>
 			<property name="LightIntensity" value="1.2"/>

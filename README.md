@@ -302,7 +302,24 @@ added power cost (e.g. 2W vs 3W). These settings and limits need further fine
 tuning. Also repair, harvest and economic resources are only roughly adjusted.
 So if you see something that is odd, open an issue here on GitHub. 
 
+### Change point-lights to spot-lights.
+
+It is actually fairly easy to switch a point-light to a spot-light on runtime.
+This solves quite a few issues with some existing models (the ceiling fan
+being one of the most obvious ones). Unfortunately the existing point-light
+in that model isn't properly rotated (as it doesn't matter with point-lights).
+But when we switch it to a spot-light, the rotation gets important. To fix
+this I added `LightOrientation` option to re-rotate the new spot-light.
+
+See the following two screens to see the difference [Before][12]/[After][13].
+
 ## Changelog
+
+### Version 0.5.1
+
+- Added `LightOrientation` option to realign spotlights
+  Finally was able to switch the ceiling fan light to use a
+  spotlight that properly points down (looks much better).
 
 ### Version 0.5.0
 
@@ -311,6 +328,14 @@ So if you see something that is odd, open an issue here on GitHub.
   will have the wrong rotation once loaded again. Only solution
   is to pick them up and place them again.
 - Added new flag `PowerDontConnect` for lantern edge-case
+
+## Further ideas
+
+- Could set color temperature directly on Unity lights.
+- Could change of lights to spot, which would be often better
+  Unfortunately many models don't have it rotated correctly.
+- Add configurable `shadowBias` to optimize self shading
+- More options are: `shadowRadios`
 
 ### Version 0.1.0
 
@@ -331,3 +356,5 @@ I've developed and tested this Mod against version a19.6b8.
 [9]: Config/blocks.xml
 [10]: https://github.com/OCB7D2D/ElectricityOverhaul
 [11]: https://community.7daystodie.com/topic/13037-dmt-modding-tool/
+[12]: Screens/ingame_lights_overview.jpg
+[13]: Screens/ingame_ceilingfan_spotlight.jpg
