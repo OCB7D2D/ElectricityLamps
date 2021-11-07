@@ -49,20 +49,11 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
     Color lightColor = defColor;
 
     float lightIntensity = 1f;
-    float lightMinIntensity = 0f;
-    float lightMaxIntensity = 1f;
-    float lightIntensityStep = 0.1f;
 
     float lightRange = 15f;
-    float lightMinRange = 0f;
-    float lightMaxRange = 80f;
-    float lightRangeStep = 0.5f;
 
     // Light angle (for spots)
     float lightSpotAngle = 60f;
-    float lightMinAngle = 30f;
-    float lightMaxAngle = 180f;
-    float lightAngleStep = 3f;
 
     // Light rotation (for spots)
     // Reserved for future use
@@ -72,10 +63,6 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
     bool isReLightReRotated = false;
     Vector3 lightOrientation = new Vector3();
 
-    // Mode can be locked per block variant
-    // Can't be changed on runtime
-    bool isModeLocked = false;
-
     public TileEntityElectricityLightBlock(Chunk _chunk) :
         base(_chunk)
     {}
@@ -84,26 +71,6 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
     {
         base.SetValuesFromBlock(blockID);
         var props = Block.list[blockID].Properties;
-        this.lightMinIntensity = !props.Values.ContainsKey("LightMinIntensity") ?
-            0f : StringParsers.ParseFloat(props.Values["LightMinIntensity"]);
-        this.lightMaxIntensity = !props.Values.ContainsKey("LightMaxIntensity") ?
-            1f : StringParsers.ParseFloat(props.Values["LightMaxIntensity"]);
-        this.lightIntensityStep = !props.Values.ContainsKey("LightIntensityStep") ?
-            0.1f : StringParsers.ParseFloat(props.Values["LightIntensityStep"]);
-        this.lightMinRange = !props.Values.ContainsKey("LightMinRange") ?
-            0f : StringParsers.ParseFloat(props.Values["LightMinRange"]);
-        this.lightMaxRange = !props.Values.ContainsKey("LightMaxRange") ?
-            80f : StringParsers.ParseFloat(props.Values["LightMaxRange"]);
-        this.lightRangeStep = !props.Values.ContainsKey("LightRangeStep") ?
-            0.5f : StringParsers.ParseFloat(props.Values["LightRangeStep"]);
-        this.lightMinAngle = !props.Values.ContainsKey("LightMinAngle") ?
-            30f : StringParsers.ParseFloat(props.Values["LightMinAngle"]);
-        this.lightMaxAngle = !props.Values.ContainsKey("LightMaxAngle") ?
-            180f : StringParsers.ParseFloat(props.Values["LightMaxAngle"]);
-        this.lightAngleStep = !props.Values.ContainsKey("LightAngleStep") ?
-            3f : StringParsers.ParseFloat(props.Values["LightAngleStep"]);
-        this.isModeLocked = !props.Values.ContainsKey("LightModeLocked") ?
-            false : StringParsers.ParseBool(props.Values["LightModeLocked"]);
         this.isReLightReRotated = props.Values.ContainsKey("LightOrientation"); 
         this.lightOrientation = !isReLightReRotated ? nullVector :
             StringParsers.ParseVector3(props.Values["LightOrientation"]);
@@ -151,7 +118,6 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
     public bool IsColorScale => (this.lightMode & 1) != 1;
     public bool IsSpotLight => (this.lightMode & 2) == 2;
     public bool IsPointLight => (this.lightMode & 2) != 2;
-    public bool IsModeLocked => this.isModeLocked;
 
     public Color LightColor
     {
@@ -213,16 +179,6 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         }
     }
 
-    public float MinSpotAngle => this.lightMinAngle;
-    public float MaxSpotAngle => this.lightMaxAngle;
-    public float SpotAngleStep => this.lightAngleStep;
-    public float MinLightRange => this.lightMinRange;
-    public float MaxLightRange => this.lightMaxRange;
-    public float LightRangeStep => this.lightRangeStep;
-    public float MinLightIntensity => this.lightMinIntensity;
-    public float MaxLightIntensity => this.lightMaxIntensity;
-    public float LightIntensityStep => this.lightIntensityStep;
-
     private void UpdateLightLOD(LightLOD lod, Color color, float intensity, float range, float angle)
     {
         lod.SetEmissiveColor(color * intensity);
@@ -252,9 +208,14 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
 
         Color color = tileEntity.LightColor;
         if (tileEntity.IsKelvinScale) color = KelvinToColor(tileEntity.LightKelvin);
-        float range = Mathf.Clamp(tileEntity.LightRange, tileEntity.lightMinRange, tileEntity.lightMaxRange);
-        float angle = Mathf.Clamp(tileEntity.LightSpotAngle, tileEntity.lightMinAngle, tileEntity.lightMaxAngle);
-        float intensity = Mathf.Clamp(tileEntity.LightIntensity, tileEntity.lightMinIntensity, tileEntity.lightMaxIntensity);
+        
+		// float range = Mathf.Clamp(tileEntity.LightRange, tileEntity.lightMinRange, tileEntity.lightMaxRange);
+        // float angle = Mathf.Clamp(tileEntity.LightSpotAngle, tileEntity.lightMinAngle, tileEntity.lightMaxAngle);
+        // float intensity = Mathf.Clamp(tileEntity.LightIntensity, tileEntity.lightMinIntensity, tileEntity.lightMaxIntensity);
+
+		float range = tileEntity.LightRange;
+		float angle = tileEntity.LightSpotAngle;
+		float intensity = tileEntity.LightIntensity;
 
         if (blockEntity.transform.Find("MainLight") is Transform transform1)
         {

@@ -4,9 +4,11 @@ using UnityEngine;
 public class XUiC_ElectricityLampsStats : XUiController
 {
 
-  public XUiC_ElectricityLampsWindowGroup Owner { get; set; }
+    public XUiC_ElectricityLampsWindowGroup Owner { get; set; }
 
-  private TileEntityElectricityLightBlock tileEntity;
+    private int BlockType;
+
+    private TileEntityElectricityLightBlock tileEntity;
 
     private PowerItem powerItem;
 
@@ -147,6 +149,15 @@ public class XUiC_ElectricityLampsStats : XUiController
         this.RefreshBindings();
     }
 
+    public string GetBlockProperty(string name, string fallback)
+    {
+        if (Block.list[BlockType].Properties == null) return fallback;
+        if (Block.list[BlockType].Properties.Values.ContainsKey(name)) {
+            return Block.list[BlockType].Properties.Values[name];
+        }
+        return fallback;
+    }
+
     public override bool GetBindingValue(ref string value, BindingItem binding)
     {
         switch (binding.FieldName)
@@ -163,35 +174,38 @@ public class XUiC_ElectricityLampsStats : XUiController
         case "IsPointLight":
             value = tileEntity != null && tileEntity.IsPointLight ? "true" : "false";
             return true;
-        case "MinSpotAngle":
-            value = tileEntity != null ? tileEntity.MinSpotAngle.ToString() : "180";
-            return true;
-        case "MaxSpotAngle":
-            value = tileEntity != null ? tileEntity.MaxSpotAngle.ToString() : "180";
-            return true;
-        case "SpotAngleStep":
-            value = tileEntity != null ? tileEntity.SpotAngleStep.ToString() : "180";
-            return true;
-        case "MinLightRange":
-            value = tileEntity != null ? tileEntity.MinLightRange.ToString() : "180";
-            return true;
-        case "MaxLightRange":
-            value = tileEntity != null ? tileEntity.MaxLightRange.ToString() : "180";
-            return true;
-        case "LightRangeStep":
-            value = tileEntity != null ? tileEntity.LightRangeStep.ToString() : "180";
-            return true;
         case "MinLightIntensity":
-            value = tileEntity != null ? tileEntity.MinLightIntensity.ToString() : "180";
+            value = GetBlockProperty("MinLightIntensity", "0");
             return true;
         case "MaxLightIntensity":
-            value = tileEntity != null ? tileEntity.MaxLightIntensity.ToString() : "180";
+            value = GetBlockProperty("LightMaxIntensity", "2");
             return true;
         case "LightIntensityStep":
-            value = tileEntity != null ? tileEntity.LightIntensityStep.ToString() : "180";
+            value = GetBlockProperty("LightIntensityStep", "0.1");
+            return true;
+        case "MinLightRange":
+            value = GetBlockProperty("LightMinRange", "0");
+            return true;
+        case "MaxLightRange":
+            value = GetBlockProperty("LightMaxRange", "80");
+            return true;
+        case "LightRangeStep":
+            value = GetBlockProperty("LightRangeStep", "0.5");
+            return true;
+        case "MinSpotAngle":
+            value = GetBlockProperty("LightMinSpotAngle", "30");
+            return true;
+        case "MaxSpotAngle":
+            value = GetBlockProperty("LightMaxSpotAngle", "180");
+            return true;
+        case "SpotAngleStep":
+            value = GetBlockProperty("LightSpotAngleStep", "3");
             return true;
         case "IsModeNotLocked":
-            value = tileEntity != null && tileEntity.IsModeLocked ? "false" : "true";
+            value = (!StringParsers.ParseBool(GetBlockProperty("LightModeLocked", "false"))).ToString();
+            return true;
+        case "IsPoweredPOI":
+            value = StringParsers.ParseBool(GetBlockProperty("PoweredPOI", "false")).ToString();
             return true;
         default:
             return false;
@@ -208,6 +222,7 @@ public class XUiC_ElectricityLampsStats : XUiController
     public override void OnOpen()
     {
         if (this.TileEntity != null) {
+            BlockType = TileEntity.GetChunk().GetBlock(TileEntity.localChunkPos).type;
             if (uiColorPicker != null) uiColorPicker.SelectedColor = this.tileEntity.LightColor;
             if (uiUseKelvin != null) uiUseKelvin.Value = this.TileEntity.IsKelvinScale;
             if (uiIntensity != null) uiIntensity.Value = this.tileEntity.LightIntensity;

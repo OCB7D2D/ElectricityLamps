@@ -331,6 +331,7 @@ See the following two screens to see the difference [Before][12]/[After][13].
 
 ## Further ideas
 
+- Return variant helper block instead of actual one?
 - Could set color temperature directly on Unity lights.
 - Could change of lights to spot, which would be often better
   Unfortunately many models don't have it rotated correctly.

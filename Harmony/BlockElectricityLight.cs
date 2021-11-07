@@ -151,11 +151,8 @@ public class BlockElectricityLight : BlockPowered
 
     public override TileEntityPowered CreateTileEntity(Chunk chunk)
     {
-        PowerItem.PowerItemTypes powerItemTypes = PowerItem.PowerItemTypes.Consumer;
-        powerItemTypes = PowerItem.PowerItemTypes.ConsumerToggle;
         TileEntityElectricityLightBlock entityPoweredBlock = new TileEntityElectricityLightBlock(chunk);
-        entityPoweredBlock.PowerItemType = powerItemTypes;
-        entityPoweredBlock.PresetDefaultValues(blockID);
+        entityPoweredBlock.PowerItemType = PowerItem.PowerItemTypes.ConsumerToggle;
         return (TileEntityPowered) entityPoweredBlock;
     }
 
