@@ -4,7 +4,7 @@
 		<Name value="ElectricityLamps" />
 		<Description value="Lamp blocks with configurable attributes" />
 		<Website value="https://github.com/OCB7D2D/ElectricityLamps" />
-		<Author value="mgreter" />
+		<Author value="ocbMaurice" />
 		<Version value="0.6.1" />
 	</ModInfo>
 </xml>
