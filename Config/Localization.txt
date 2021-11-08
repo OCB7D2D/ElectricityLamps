@@ -73,6 +73,7 @@ ocbFluorescentLight01,blocks,block,"Powered Fluorescent Light"
 ocbTrackLight01,blocks,block,"Powered Track Light"
 ocbChandelierLight01,blocks,block,"Powered Chandelier Light"
 ocbWorkLight01,blocks,block,"Powered Work Light"
+ocbMastLamp01,blocks,block,"Powered Mast Lamp"
 ocbStreetLight01,blocks,block,"Powered Street Light"
 
 bookTechJunkie8Complete,UI,Menu,"All Tech Junkie Volumes"

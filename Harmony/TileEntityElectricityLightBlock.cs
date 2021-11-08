@@ -58,8 +58,8 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
 
     float lightRange = 15f;
 
-    // Light angle (for spots)
-    float lightSpotAngle = 60f;
+    // Light beam angle (for spots)
+    float lightBeamAngle = 60f;
 
     // Light rotation (for spots)
     // Reserved for future use
@@ -96,8 +96,8 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
             1f : StringParsers.ParseFloat(props.Values["LightIntensity"]);
         this.lightRange = !props.Values.ContainsKey("LightRange") ?
             1f : StringParsers.ParseFloat(props.Values["LightRange"]);
-        this.lightSpotAngle = !props.Values.ContainsKey("LightSpotAngle") ?
-            60f : StringParsers.ParseFloat(props.Values["LightSpotAngle"]);
+        this.lightBeamAngle = !props.Values.ContainsKey("LightAngle") ?
+            60f : StringParsers.ParseFloat(props.Values["LightAngle"]);
         this.lightMode = !props.Values.ContainsKey("LightMode") ?
             (byte)0 : StringParsers.ParseUInt8(props.Values["LightMode"]);
         if (this.chunk == null) return;
@@ -161,12 +161,12 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         }
     }
 
-    public float LightSpotAngle
+    public float LightBeamAngle
     {
-        get => this.lightSpotAngle;
+        get => this.lightBeamAngle;
         set
         {
-            this.lightSpotAngle = value;
+            this.lightBeamAngle = value;
             if (this.chunk == null) return;
             BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
             if (blockEntity != null) this.UpdateLightState(blockEntity);
@@ -235,11 +235,11 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         if (tileEntity.IsKelvinScale) color = KelvinToColor(tileEntity.LightKelvin);
         
         // float range = Mathf.Clamp(tileEntity.LightRange, tileEntity.lightMinRange, tileEntity.lightMaxRange);
-        // float angle = Mathf.Clamp(tileEntity.LightSpotAngle, tileEntity.lightMinAngle, tileEntity.lightMaxAngle);
+        // float angle = Mathf.Clamp(tileEntity.LightBeamAngle, tileEntity.lightMinAngle, tileEntity.lightMaxAngle);
         // float intensity = Mathf.Clamp(tileEntity.LightIntensity, tileEntity.lightMinIntensity, tileEntity.lightMaxIntensity);
 
         float range = tileEntity.LightRange;
-        float angle = tileEntity.LightSpotAngle;
+        float angle = tileEntity.LightBeamAngle;
         float intensity = tileEntity.LightIntensity;
 
         if (blockEntity.transform.Find("MainLight") is Transform transform1)
@@ -300,7 +300,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         this.lightTemperature = _br.ReadUInt16();
         this.lightRange = _br.ReadSingle();
         if (this.IsSpotLight) {
-            this.lightSpotAngle = _br.ReadSingle();
+            this.lightBeamAngle = _br.ReadSingle();
             this.lightRotationRa = _br.ReadSingle();
             this.lightRotationDec = _br.ReadSingle();
         }
@@ -317,7 +317,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         _bw.Write(this.LightKelvin);
         _bw.Write(this.lightRange);
         if (this.IsSpotLight) {
-            _bw.Write(this.lightSpotAngle);
+            _bw.Write(this.lightBeamAngle);
             _bw.Write(this.lightRotationRa);
             _bw.Write(this.lightRotationDec);
         }

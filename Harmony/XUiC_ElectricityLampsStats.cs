@@ -28,7 +28,7 @@ public class XUiC_ElectricityLampsStats : XUiController
     private XUiC_ComboBoxBool uiUseKelvin;
     private XUiC_ComboBoxInt uiTemperature;
     private XUiC_ComboBoxFloat uiIntensity;
-    private XUiC_ComboBoxFloat uiSpotAngle;
+    private XUiC_ComboBoxFloat uiBeamAngle;
     private XUiC_ComboBoxFloat uiRange;
 
 
@@ -62,12 +62,12 @@ public class XUiC_ElectricityLampsStats : XUiController
             Log.Warning("ElectricityLampsStats missing uiIntensity");
         }
 
-        this.uiSpotAngle = (XUiC_ComboBoxFloat) this.GetChildById("uiSpotAngle");
-        if (this.uiSpotAngle != null) {
-            this.uiSpotAngle.OnValueChanged +=
-                new XUiC_ComboBox<double>.XUiEvent_ValueChanged(this.uiSpotAngle_OnValueChanged);
+        this.uiBeamAngle = (XUiC_ComboBoxFloat) this.GetChildById("uiBeamAngle");
+        if (this.uiBeamAngle != null) {
+            this.uiBeamAngle.OnValueChanged +=
+                new XUiC_ComboBox<double>.XUiEvent_ValueChanged(this.uiBeamAngle_OnValueChanged);
         } else {
-            Log.Warning("ElectricityLampsStats missing uiSpotAngle");
+            Log.Warning("ElectricityLampsStats missing uiBeamAngle");
         }
 
         this.uiRange = (XUiC_ComboBoxFloat) this.GetChildById("uiRange");
@@ -99,10 +99,10 @@ public class XUiC_ElectricityLampsStats : XUiController
     }
 
 
-    private void uiSpotAngle_OnValueChanged(XUiController _sender, double _oldValue, double _newValue)
+    private void uiBeamAngle_OnValueChanged(XUiController _sender, double _oldValue, double _newValue)
     {
         if (TileEntity != null) {
-            TileEntity.LightSpotAngle = (float)_newValue;
+            TileEntity.LightBeamAngle = (float)_newValue;
             BlockEntityData blockEntity = TileEntity.GetChunk().GetBlockEntity(TileEntity.ToWorldPos());
             if (blockEntity != null) TileEntity.UpdateLightState(blockEntity);
         }
@@ -192,14 +192,14 @@ public class XUiC_ElectricityLampsStats : XUiController
         case "LightRangeStep":
             value = GetBlockProperty("LightRangeStep", "0.5");
             return true;
-        case "MinSpotAngle":
-            value = GetBlockProperty("LightMinSpotAngle", "30");
+        case "MinBeamAngle":
+            value = GetBlockProperty("LightMinAngle", "30");
             return true;
-        case "MaxSpotAngle":
-            value = GetBlockProperty("LightMaxSpotAngle", "180");
+        case "MaxBeamAngle":
+            value = GetBlockProperty("LightMaxAngle", "180");
             return true;
-        case "SpotAngleStep":
-            value = GetBlockProperty("LightSpotAngleStep", "3");
+        case "BeamAngleStep":
+            value = GetBlockProperty("LightAngleStep", "3");
             return true;
         case "IsModeNotLocked":
             value = (!StringParsers.ParseBool(GetBlockProperty("LightModeLocked", "false"))).ToString();
@@ -228,7 +228,7 @@ public class XUiC_ElectricityLampsStats : XUiController
             if (uiIntensity != null) uiIntensity.Value = this.tileEntity.LightIntensity;
             if (uiTemperature != null) uiTemperature.Value = this.tileEntity.LightKelvin;
             if (uiRange != null) uiRange.Value = this.tileEntity.LightRange;
-            if (uiSpotAngle != null) uiSpotAngle.Value = this.tileEntity.LightSpotAngle;
+            if (uiBeamAngle != null) uiBeamAngle.Value = this.tileEntity.LightBeamAngle;
         }
         base.OnOpen();
         // Start copy from XUiC_PowerSourceStats

@@ -27,9 +27,9 @@
 						</panel>
 						<panel height="30" width="340" disableautobackground="true" visible="{IsSpotLight}">
 							<!-- <sprite depth="1" name="windowIcon" style="icon22px" pos="2,-2" sprite="ui_game_symbol_light_intensity"/> -->
-							<label depth="1" width="180" pos="2,-2" name="lblSpotAngle" font_size="22" text="Beam ∠" text_key="xuiAngle" />
-							<combobox name ="uiSpotAngle" type="ComboBoxFloat" width="130" height="30" pos="80,-2"
-								value_increment="{SpotAngleStep}" value_min="{MinSpotAngle}" value_max="{MaxSpotAngle}" value_wrap="false" format_string="0°" />
+							<label depth="1" width="180" pos="2,-2" name="lblBeamAngle" font_size="22" text="Beam ∠" text_key="xuiAngle" />
+							<combobox name ="uiBeamAngle" type="ComboBoxFloat" width="130" height="30" pos="80,-2"
+								value_increment="{BeamAngleStep}" value_min="{MinBeamAngle}" value_max="{MaxBeamAngle}" value_wrap="false" format_string="0°" />
 						</panel>
 						<panel height="30" width="340" disableautobackground="true" visible="{IsModeNotLocked}">
 							<!-- <sprite depth="1" name="windowIcon" style="icon22px" pos="2,-2" sprite="ui_game_symbol_light_kelvins"/> -->
