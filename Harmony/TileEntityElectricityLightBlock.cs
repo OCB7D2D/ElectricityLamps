@@ -4,7 +4,13 @@ using UnityEngine;
 public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
 {
 
+    public bool IsClaimed = false;
+
+    public bool IsPoweredPOI = false;
+
     private static bool warnOnce = true;
+
+    private float nextTickCheck = 0;
 
     private static Vector3 nullVector;
 
@@ -194,6 +200,18 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         }
     }
 
+    public override void UpdateTick(World world)
+    {
+        if (this.chunk == null) return;
+        if (Time.fixedTime > nextTickCheck) {
+            BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
+            // UpdateLightState will always check for land claim block!
+            if (blockEntity != null) this.UpdateLightState(blockEntity);
+            nextTickCheck = Time.fixedTime + 150f +
+                world.GetGameRandom().RandomRange(90f);
+        }
+    }
+
     public void UpdateLightState(BlockEntityData blockEntity)
     {
 
@@ -204,18 +222,25 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         TileEntityElectricityLightBlock tileEntity = this;
 
         // Only available on SinglePlayer instance?
-        bool _isOn = IsPowered && IsToggled;
+        bool _isOn = (IsPoweredPOI || IsPowered) && IsToggled;
+
+        // If light is claimed by user, turn off free energy
+        if (!GameManager.IsDedicatedServer && IsPoweredPOI) {
+            IsClaimed = GameManager.Instance.World.IsMyLandProtectedBlock(ToWorldPos(),
+                GameManager.Instance.World.GetGameManager().GetPersistentLocalPlayer());
+            if (IsClaimed && !IsPowered) _isOn = false;
+        }
 
         Color color = tileEntity.LightColor;
         if (tileEntity.IsKelvinScale) color = KelvinToColor(tileEntity.LightKelvin);
         
-		// float range = Mathf.Clamp(tileEntity.LightRange, tileEntity.lightMinRange, tileEntity.lightMaxRange);
+        // float range = Mathf.Clamp(tileEntity.LightRange, tileEntity.lightMinRange, tileEntity.lightMaxRange);
         // float angle = Mathf.Clamp(tileEntity.LightSpotAngle, tileEntity.lightMinAngle, tileEntity.lightMaxAngle);
         // float intensity = Mathf.Clamp(tileEntity.LightIntensity, tileEntity.lightMinIntensity, tileEntity.lightMaxIntensity);
 
-		float range = tileEntity.LightRange;
-		float angle = tileEntity.LightSpotAngle;
-		float intensity = tileEntity.LightIntensity;
+        float range = tileEntity.LightRange;
+        float angle = tileEntity.LightSpotAngle;
+        float intensity = tileEntity.LightIntensity;
 
         if (blockEntity.transform.Find("MainLight") is Transform transform1)
         {
@@ -246,7 +271,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         }
         if (blockEntity.transform.Find("ExtraPointLight") is Transform transform4)
         {
-			if (warnOnce) Log.Warning("LightLOD => Light Model has ExtraPointLight");
+            if (warnOnce) Log.Warning("LightLOD => Light Model has ExtraPointLight");
             if (transform4.GetComponent<LightLOD>() is LightLOD component) {
                 if (isReLightReRotated) transform4.localEulerAngles = lightOrientation;
                 UpdateLightLOD(component, color, intensity, range, angle);
@@ -256,7 +281,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         }
         if (blockEntity.transform.Find("Point light") is Transform transform5)
         {
-			if (warnOnce) Log.Warning("LightLOD => Light Model has Point Light");
+            if (warnOnce) Log.Warning("LightLOD => Light Model has Point Light");
             if (transform5.GetComponent<LightLOD>() is LightLOD component) {
                 if (isReLightReRotated) transform5.localEulerAngles = lightOrientation;
                 UpdateLightLOD(component, color, intensity, range, angle);

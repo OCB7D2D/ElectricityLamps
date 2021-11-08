@@ -41,6 +41,12 @@ public class BlockElectricityLight : BlockPowered
         TileEntityPowered tileEntity = this.CreateTileEntity(_chunk);
         tileEntity.localChunkPos = World.toBlock(_blockPos);
         tileEntity.InitializePowerData();
+        if (tileEntity is TileEntityElectricityLightBlock toggle) {
+            toggle.IsToggled = ((uint)_blockValue.meta & 2U) > 0U;
+            if (toggle.GetPowerItem() is PowerConsumerToggle consumer) {
+                consumer.IsToggled = toggle.IsToggled;
+            }
+        }
         _chunk.AddTileEntity((TileEntity) tileEntity);
     }
 
@@ -55,22 +61,24 @@ public class BlockElectricityLight : BlockPowered
         TileEntityElectricityLightBlock tileEntity = (TileEntityElectricityLightBlock) _world.GetTileEntity(_cIdx, _blockPos);
         switch (_indexInBlockActivationCommands)
         {
-        case 0:
-            if (!_world.IsEditor() && tileEntity != null)
-            {
-            tileEntity.IsToggled = !tileEntity.IsToggled;
-            break;
-            }
-            break;
-        case 1:
-            _player.AimingGun = false;
-            if (tileEntity == null) return false;
-            Vector3i worldPos = tileEntity.ToWorldPos();
-            _world.GetGameManager().TELockServer(_cIdx, worldPos, tileEntity.entityId, _player.entityId);
-            return true;
-        case 2:
-            this.TakeItemWithTimer(_cIdx, _blockPos, _blockValue, _player);
-            return true;
+            case 0:
+                if (!_world.IsEditor() && tileEntity != null)
+                {
+                    tileEntity.IsToggled = !tileEntity.IsToggled;
+                    _blockValue.meta = (byte) ((int) _blockValue.meta & -3 | (tileEntity.IsToggled ? 2 : 0));
+                    _world.SetBlockRPC(_cIdx, _blockPos, _blockValue);
+                    break;
+                }
+                break;
+            case 1:
+                _player.AimingGun = false;
+                if (tileEntity == null) return false;
+                Vector3i worldPos = tileEntity.ToWorldPos();
+                _world.GetGameManager().TELockServer(_cIdx, worldPos, tileEntity.entityId, _player.entityId);
+                return true;
+            case 2:
+                this.TakeItemWithTimer(_cIdx, _blockPos, _blockValue, _player);
+                return true;
         }
         return false;	
     }
@@ -84,9 +92,12 @@ public class BlockElectricityLight : BlockPowered
     {
         TileEntityElectricityLightBlock tileEntity = (TileEntityElectricityLightBlock) _world.GetTileEntity(_clrIdx, _blockPos);
         bool flag = _world.IsMyLandProtectedBlock(_blockPos, _world.GetGameManager().GetPersistentLocalPlayer());
+        var props = Block.list[_blockValue.type].Properties;
+        bool isPoweredPOI = !props.Values.ContainsKey("PoweredPOI") ?
+            false : StringParsers.ParseBool(props.Values["PoweredPOI"]);
         this.cmds[0].enabled = true;
-        this.cmds[1].enabled = flag && tileEntity != null;
-        this.cmds[2].enabled = flag && (double) this.TakeDelay > 0.0;
+        this.cmds[1].enabled = _world.IsEditor() || flag && tileEntity != null;
+        this.cmds[2].enabled = !isPoweredPOI && flag && (double) this.TakeDelay > 0.0;
         return this.cmds;
     }
 
@@ -108,6 +119,9 @@ public class BlockElectricityLight : BlockPowered
         if (tileEntity == null) return true;
         BlockEntityData blockEntity = tileEntity.GetChunk().GetBlockEntity(_blockPos);
         if (blockEntity == null) return true;
+        var props = Block.list[_blockValue.type].Properties;
+        tileEntity.IsPoweredPOI = !props.Values.ContainsKey("PoweredPOI") ?
+            false : StringParsers.ParseBool(props.Values["PoweredPOI"]);
         tileEntity.UpdateLightState(blockEntity);
         return true;
     }
@@ -143,6 +157,9 @@ public class BlockElectricityLight : BlockPowered
         bool isOn,
         bool isPowered)
     {
+        var props = Block.list[_blockValue.type].Properties;
+        isOn = !props.Values.ContainsKey("PoweredPOI") ? isOn:
+            StringParsers.ParseBool(props.Values["PoweredPOI"]);
         _blockValue.meta = (byte) ((int) _blockValue.meta & -3 | (isOn ? 2 : 0));
         _world.SetBlockRPC(_cIdx, _blockPos, _blockValue);
         this.updateLightState(_world, _cIdx, _blockPos, _blockValue);
@@ -153,6 +170,9 @@ public class BlockElectricityLight : BlockPowered
     {
         TileEntityElectricityLightBlock entityPoweredBlock = new TileEntityElectricityLightBlock(chunk);
         entityPoweredBlock.PowerItemType = PowerItem.PowerItemTypes.ConsumerToggle;
+        // Seems to be called when copying chunks into the world from prefabs
+        // Which makes this ideal to add some randomness to POI stuff
+        entityPoweredBlock.PresetDefaultValues(blockID);
         return (TileEntityPowered) entityPoweredBlock;
     }
 
