@@ -1,19 +1,15 @@
-using DMT;
 using HarmonyLib;
 using System.Reflection;
 using UnityEngine;
 
-public class OcbElectricityLamps
+public class OcbElectricityLamps : IModApi
 {
-    // Entry class for Harmony patching
-    public class OcbElectricityLamps_Init : IHarmony
+
+    public void InitMod(Mod mod)
     {
-        public void Start()
-        {
-            Debug.Log("Loading OCB Electricity Lamps Patch: " + GetType().ToString());
-            var harmony = new Harmony(GetType().ToString());
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
-        }
+        Debug.Log("Loading OCB Electricity Lamps Patch: " + GetType().ToString());
+        var harmony = new Harmony(GetType().ToString());
+        harmony.PatchAll(Assembly.GetExecutingAssembly());
     }
 
     [HarmonyPatch(typeof (TileEntity))]

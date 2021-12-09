@@ -11,7 +11,7 @@
 			<!-- never show this block anywhere -->
 			<property name="CreativeMode" value="None"/>
 			<!-- use our own implementation from harmony dll -->
-			<property name="Class" value="ElectricityLight, Harmony-ElectricityLamps"/>
+			<property name="Class" value="ElectricityLight, ElectricityLamps"/>
 			<!-- some basic block options -->
 			<property name="TakeDelay" value="5"/>
 			<property name="MaxDamage" value="500"/>
@@ -981,7 +981,7 @@
 	<!--####################################################################-->
 
 	<!-- For very adventurous, changes every light in the whole world to be our (currently switches off every light until you power it yourself - no free energy) -->
-	<!-- <setattribute xpath="/blocks/block/property[@name='Class' and @value='Light']" name="value">ElectricityLight, Harmony-ElectricityLamps</setattribute> -->
+	<!-- <setattribute xpath="/blocks/block/property[@name='Class' and @value='Light']" name="value">ElectricityLight, ElectricityLamps</setattribute> -->
 
 	<!--####################################################################-->
 	<!--####################################################################-->

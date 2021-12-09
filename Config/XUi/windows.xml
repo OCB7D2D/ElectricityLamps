@@ -3,7 +3,7 @@
 	<append xpath="/windows">
 
 
-		<window name="windowElectricityLampsStats" width="228" height="392" panel="Left" controller="XUiC_ElectricityLampsStats, Harmony-ElectricityLamps" >
+		<window name="windowElectricityLampsStats" width="228" height="392" panel="Left" controller="XUiC_ElectricityLampsStats, ElectricityLamps" >
 			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header">
 				<sprite depth="2" name="windowIcon" style="icon32px" pos="5,-5" sprite="ui_game_symbol_resource"/>
 				<label style="header.name" text="OPTIONS" text_key="xuiLightOptions" />

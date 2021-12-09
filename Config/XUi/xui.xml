@@ -1,7 +1,7 @@
 <configs>
 
 	<append xpath="/xui/ruleset[@name='default']" >
-		<window_group name="electricitylamps" controller="XUiC_ElectricityLampsWindowGroup, Harmony-ElectricityLamps">
+		<window_group name="electricitylamps" controller="XUiC_ElectricityLampsWindowGroup, ElectricityLamps">
 			<window name="windowElectricityLampsStats" />
 		</window_group>
 	</append>

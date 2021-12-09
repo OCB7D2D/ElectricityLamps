@@ -1,8 +1,82 @@
 using System.IO;
 using UnityEngine;
+using Platform;
 
 public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
 {
+
+//	public LightType LightType = LightType.Point;
+//	public LightShadows LightShadows;
+//	public float LightIntensity = 1f;
+//	public float LightRange = 10f;
+//	public float LightAngle = 45f;
+//	public Color LightColor = Color.white;
+
+
+    public Color LightColor
+    {
+        get => this.lightColor;
+        set
+        {
+            this.lightColor = value;
+            if (this.chunk == null) return;
+            BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
+            if (blockEntity != null) this.UpdateLightState(blockEntity);
+        }
+    }
+
+    public float LightIntensity
+    {
+        get => this.lightIntensity;
+        set
+        {
+            this.lightIntensity = value;
+            if (this.chunk == null) return;
+            BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
+            if (blockEntity != null) this.UpdateLightState(blockEntity);
+        }
+    }
+
+    public ushort LightKelvin
+    {
+        get => this.lightTemperature;
+        set
+        {
+            this.lightTemperature = value;
+            if (this.chunk == null) return;
+            BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
+            if (blockEntity != null) this.UpdateLightState(blockEntity);
+        }
+    }
+
+    public float LightBeamAngle
+    {
+        get => this.lightBeamAngle;
+        set
+        {
+            this.lightBeamAngle = value;
+            if (this.chunk == null) return;
+            BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
+            if (blockEntity != null) this.UpdateLightState(blockEntity);
+        }
+    }
+
+    public float LightRange
+    {
+        get => this.lightRange;
+        set
+        {
+            this.lightRange = value;
+            if (this.chunk == null) return;
+            BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
+            if (blockEntity != null) this.UpdateLightState(blockEntity);
+        }
+    }
+
+
+	public LightStateType LightState;
+	public float Rate = 1f;
+	public float Delay = 1f;
 
     public bool IsClaimed = false;
 
@@ -12,7 +86,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
 
     private float nextTickCheck = 0;
 
-    private static Vector3 nullVector;
+    private static Vector3 nullVector = new Vector3(0, 0, 0);
 
     private static ushort defKelvin = 3200;
 
@@ -125,69 +199,11 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
     public bool IsSpotLight => (this.lightMode & 2) == 2;
     public bool IsPointLight => (this.lightMode & 2) != 2;
 
-    public Color LightColor
-    {
-        get => this.lightColor;
-        set
-        {
-            this.lightColor = value;
-            if (this.chunk == null) return;
-            BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
-            if (blockEntity != null) this.UpdateLightState(blockEntity);
-        }
-    }
-
-    public float LightIntensity
-    {
-        get => this.lightIntensity;
-        set
-        {
-            this.lightIntensity = value;
-            if (this.chunk == null) return;
-            BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
-            if (blockEntity != null) this.UpdateLightState(blockEntity);
-        }
-    }
-
-    public ushort LightKelvin
-    {
-        get => this.lightTemperature;
-        set
-        {
-            this.lightTemperature = value;
-            if (this.chunk == null) return;
-            BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
-            if (blockEntity != null) this.UpdateLightState(blockEntity);
-        }
-    }
-
-    public float LightBeamAngle
-    {
-        get => this.lightBeamAngle;
-        set
-        {
-            this.lightBeamAngle = value;
-            if (this.chunk == null) return;
-            BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
-            if (blockEntity != null) this.UpdateLightState(blockEntity);
-        }
-    }
-
-    public float LightRange
-    {
-        get => this.lightRange;
-        set
-        {
-            this.lightRange = value;
-            if (this.chunk == null) return;
-            BlockEntityData blockEntity = chunk.GetBlockEntity(ToWorldPos());
-            if (blockEntity != null) this.UpdateLightState(blockEntity);
-        }
-    }
 
     private void UpdateLightLOD(LightLOD lod, Color color, float intensity, float range, float angle)
     {
-        lod.SetEmissiveColor(color * intensity);
+        lod.EmissiveColor = color * intensity;
+        lod.SetEmissiveColor();
         lod.MaxIntensity = intensity;
         if (lod.GetLight() is Light light) {
             lod.SetRange(range);
@@ -248,13 +264,13 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
             if (transform1.GetComponent<LightLOD>() is LightLOD component)
             {
                 UpdateLightLOD(component, color, intensity, range, angle);
-                component.SwitchOnOff(_isOn);
+                component.SwitchOnOff(_isOn, Vector3i.min);
             }
         }
         if (blockEntity.transform.Find("SeparatedLensFlare") is Transform transform2)
         {
             if (transform2.GetComponent<LightLOD>() is LightLOD component) {
-                component.SwitchOnOff(_isOn);
+                component.SwitchOnOff(_isOn, Vector3i.min);
             }
         }
         
@@ -275,7 +291,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
             if (transform4.GetComponent<LightLOD>() is LightLOD component) {
                 if (isReLightReRotated) transform4.localEulerAngles = lightOrientation;
                 UpdateLightLOD(component, color, intensity, range, angle);
-                component.SwitchOnOff(_isOn);
+                component.SwitchOnOff(_isOn, Vector3i.min);
             }
             warnOnce = false;
         }
@@ -285,7 +301,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
             if (transform5.GetComponent<LightLOD>() is LightLOD component) {
                 if (isReLightReRotated) transform5.localEulerAngles = lightOrientation;
                 UpdateLightLOD(component, color, intensity, range, angle);
-                component.SwitchOnOff(_isOn);
+                component.SwitchOnOff(_isOn, Vector3i.min);
             }
             warnOnce = false;
         }
@@ -304,7 +320,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
             this.lightRotationRa = _br.ReadSingle();
             this.lightRotationDec = _br.ReadSingle();
         }
-        this.lightColor = NetworkUtils.ReadColor32((BinaryReader) _br);
+        this.lightColor = StreamUtils.ReadColor32((BinaryReader) _br);
         if (chunk != null) blockEntity = chunk.GetBlockEntity(ToWorldPos());
         if (blockEntity != null) this.UpdateLightState(blockEntity);
     }
@@ -321,7 +337,7 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
             _bw.Write(this.lightRotationRa);
             _bw.Write(this.lightRotationDec);
         }
-        NetworkUtils.WriteColor32((BinaryWriter) _bw, this.LightColor);
+        StreamUtils.WriteColor32((BinaryWriter) _bw, this.LightColor);
     }
 
     protected override PowerItem CreatePowerItem() {

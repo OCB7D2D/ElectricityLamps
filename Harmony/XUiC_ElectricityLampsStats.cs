@@ -1,4 +1,3 @@
-using Audio;
 using UnityEngine;
 
 public class XUiC_ElectricityLampsStats : XUiController
@@ -158,9 +157,9 @@ public class XUiC_ElectricityLampsStats : XUiController
         return fallback;
     }
 
-    public override bool GetBindingValue(ref string value, BindingItem binding)
+    public override bool GetBindingValue(ref string value, string fieldName)
     {
-        switch (binding.FieldName)
+        switch (fieldName)
         {	
         case "IsColorScale":
             value = tileEntity != null && tileEntity.IsColorScale ? "true" : "false";

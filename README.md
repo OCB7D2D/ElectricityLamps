@@ -1,9 +1,7 @@
-# OCB Electricity Lamps - 7 Days to Die (DMT/Harmony) Addon
+# OCB Electricity Lamps - 7 Days to Die (A20) Addon
 
-This (Harmony) Mod adds new light blocks that support coloring, dimming
-and beam angle adjustments (for spotlights only). You will need
-[DMT][11] already installed in your game folder to pick-up the
-harmony dll from this mod.
+This (A20) Mod adds new light blocks that support coloring, dimming
+and beam angle adjustments (for spotlights only).
 
 https://community.7daystodie.com/topic/25582-new-and-better-electric-lamplight-blocks-dmtharmony/
 

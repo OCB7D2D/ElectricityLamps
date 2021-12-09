@@ -31,8 +31,6 @@ public class XUiC_ElectricityLampsWindowGroup : XUiController
 
     public override bool AlwaysUpdate() => false;
 
-    public override bool OpenBackpackOnOpen() => false;
-
     public override void OnOpen()
     {
         base.OnOpen();
@@ -46,8 +44,6 @@ public class XUiC_ElectricityLampsWindowGroup : XUiController
             this.children[index].OnOpen();
         if (this.ElectricityLampsStats != null && this.TileEntity != null)
             this.ElectricityLampsStats.OnOpen();
-        if (this.OpenBackpackOnOpen() && (Object) GameManager.Instance != (Object) null && !this.xui.playerUI.windowManager.IsWindowOpen("backpack"))
-            this.xui.playerUI.windowManager.Open("backpack", false);
         if (this.xui.playerUI.windowManager.IsWindowOpen("compass"))
             this.xui.playerUI.windowManager.Close("compass");
         Manager.BroadcastPlayByLocalPlayer(this.TileEntity.ToWorldPos().ToVector3() + Vector3.one * 0.5f, "open_vending");
