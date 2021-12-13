@@ -10,6 +10,11 @@ public class BlockElectricityLight : BlockPowered
 
     public override byte GetLightValue(BlockValue _blockValue) => ((int) _blockValue.meta & 2) == 0 ? (byte) 0 : base.GetLightValue(_blockValue);
 
+    // Take values from lights stored in prefabs
+    public override bool IsTileEntitySavedInPrefab()
+    {
+        return true;
+    }
 
     public override string GetActivationText(
         WorldBase _world,
@@ -78,7 +83,7 @@ public class BlockElectricityLight : BlockPowered
                 this.TakeItemWithTimer(_cIdx, _blockPos, _blockValue, _player);
                 return true;
         }
-        return false;	
+        return false;
     }
 
     public override BlockActivationCommand[] GetBlockActivationCommands(

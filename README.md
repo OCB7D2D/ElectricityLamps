@@ -1,7 +1,8 @@
-# OCB Electricity Lamps - 7 Days to Die (A20) Addon
+# OCB Electricity Lamps Mod - 7 Days to Die (A20) Addon
 
-This (A20) Mod adds new light blocks that support coloring, dimming
-and beam angle adjustments (for spotlights only).
+This (A20) Mod adds new light blocks that support coloring,
+dimming and beam angle adjustments (for spotlights only).
+You need to disable EAC to use this mod!
 
 https://community.7daystodie.com/topic/25582-new-and-better-electric-lamplight-blocks-dmtharmony/
 
@@ -31,7 +32,38 @@ accurate in regard to real-life, but should be good enough.
 
 ![Lamp Kelvin Overview](Screens/ingame_variants_temps.jpg)
 
-## Additional Lights included
+
+## Additional Addon Modules
+
+There are a few additional modlets that enable more features.
+They need this mod to be loaded to do anything useful.
+
+#### Powered POI lights (experimental)
+
+Ever wondered where that energy comes from for POI lights?
+This addon changes all POI lights to use this class instead.
+It allows users to toggle all lights in the world on and off.
+Additionally if a user places a land claim block, the lights
+within reach will slowly stop working magically. You have to
+power them yourself if you want to use them.
+
+https://github.com/OCB7D2D/ElectricityLampsPOI
+
+Another small modlet simply forces all POI lights in the world
+to have a soft-shadow. This is something that is normally set
+in the prefabs, but some may not be properly configured.
+
+https://github.com/OCB7D2D/ElectricityLightShadowSoft
+
+Another small modlet that tries to fix some unity lights settings.
+Sometimes light seems to shine through walls where it shouldn't.
+This modlet adjust quite a few unity lights settings, like shadow
+bias or near plane in order to try to fix most of the common issues.
+This is somewhat experimental as I haven't tested it fully yet.
+
+https://github.com/OCB7D2D/ElectricityLightFixes
+
+## Additional Lights (included)
 
 I initially developed this mod with three free models from
 the unity asset store. I soon found out that the vanilla
