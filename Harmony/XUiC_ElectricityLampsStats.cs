@@ -101,7 +101,7 @@ public class XUiC_ElectricityLampsStats : XUiController
     private void uiBeamAngle_OnValueChanged(XUiController _sender, double _oldValue, double _newValue)
     {
         if (TileEntity != null) {
-            TileEntity.LightBeamAngle = (float)_newValue;
+            TileEntity.LightAngle = (float)_newValue;
             BlockEntityData blockEntity = TileEntity.GetChunk().GetBlockEntity(TileEntity.ToWorldPos());
             if (blockEntity != null) TileEntity.UpdateLightState(blockEntity);
         }
@@ -160,7 +160,7 @@ public class XUiC_ElectricityLampsStats : XUiController
     public override bool GetBindingValue(ref string value, string fieldName)
     {
         switch (fieldName)
-        {	
+        {
         case "IsColorScale":
             value = tileEntity != null && tileEntity.IsColorScale ? "true" : "false";
             return true;
@@ -227,7 +227,7 @@ public class XUiC_ElectricityLampsStats : XUiController
             if (uiIntensity != null) uiIntensity.Value = this.tileEntity.LightIntensity;
             if (uiTemperature != null) uiTemperature.Value = this.tileEntity.LightKelvin;
             if (uiRange != null) uiRange.Value = this.tileEntity.LightRange;
-            if (uiBeamAngle != null) uiBeamAngle.Value = this.tileEntity.LightBeamAngle;
+            if (uiBeamAngle != null) uiBeamAngle.Value = this.tileEntity.LightAngle;
         }
         base.OnOpen();
         // Start copy from XUiC_PowerSourceStats

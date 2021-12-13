@@ -28,24 +28,28 @@
 			<property name="Collide" value="melee,bullet,arrow,rocket"/>
 			<!-- dont give ourself back -->
 			<drop event="Destroy" count="0"/>
-			<!-- setup basic light options -->
+			<!-- options as inherited from powered block -->
 			<property name="RequiredPower" value="1"/>
+			<!-- Switch between color and kelvin mode -->
 			<property name="LightMode" value="1"/>
+			<!-- light intensity as passed to light LOD -->
 			<property name="LightIntensity" value="1.0"/>
+			<!-- options for the slider in the UI -->
 			<property name="LightMinIntensity" value="0.2"/>
 			<property name="LightMaxIntensity" value="8.0"/>
 			<property name="LightIntensityStep" value="0.1"/>
+			<!-- light range as passed to light LOD -->
 			<property name="LightRange" value="15"/>
+			<!-- options for the slider in the UI -->
 			<property name="LightMinRange" value="0"/>
 			<property name="LightMaxRange" value="50"/>
 			<property name="LightRangeStep" value="1"/>
 			<!-- only useful for spotlights -->
 			<property name="LightAngle" value="95"/>
+			<!-- options for the slider in the UI -->
 			<property name="LightMinAngle" value="35"/>
 			<property name="LightMaxAngle" value="135"/>
 			<property name="LightAngleStep" value="5"/>
-			<!-- Does this do something for LightLOD? -->
-			<!-- <property name="Light" value="0.5"/> -->
 			<!-- this setting ensures that the wrench does the right (visual) action -->
 			<drop event="Harvest" name="terrStone" count="0" tag="salvageHarvest" tool_category="Disassemble"/>
 			<!-- some base setup for later -->
