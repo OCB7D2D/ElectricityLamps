@@ -445,7 +445,10 @@ public class TileEntityElectricityLightBlock : TileEntityPoweredBlock
         // Call PoweredBlock base writer
         base.write(_bw, _eStreamMode);
         // Write protocol version
-        _bw.Write((byte)0); // byte
+        if (_eStreamMode == StreamModeWrite.Persistency)
+        {
+            _bw.Write((byte)0); // byte
+        }
         // Write all light options
         _bw.Write(this.LightMode); // byte
         _bw.Write(this.lightRange);

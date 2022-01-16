@@ -345,17 +345,32 @@ See the following two screens to see the difference [Before][12]/[After][13].
 
 ## Changelog
 
+### Version 0.7.1
+
+- Bugfix for dedicated servers
+
+### Version 0.7.0
+
+- Implement POI light take-over  
+  This allows POI lights to be driven by our implementation.  
+  We also take most values as set for lights in the prefabs.
+
+### Version 0.6.0
+
+- Fix some wire offsets and typos
+- Move UI settings to correct place
+
 ### Version 0.5.1
 
-- Added `LightOrientation` option to realign spotlights
-  Finally was able to switch the ceiling fan light to use a
+- Added `LightOrientation` option to realign spotlights  
+  Finally was able to switch the ceiling fan light to use a  
   spotlight that properly points down (looks much better).
 
 ### Version 0.5.0
 
 - Fixed light range being constantly overwritten by LightLOD
-- Fixed rotation in the unity3d file, meaning your existing lights
-  will have the wrong rotation once loaded again. Only solution
+- Fixed rotation in the unity3d file, meaning your existing lights  
+  will have the wrong rotation once loaded again. Only solution  
   is to pick them up and place them again.
 - Added new flag `PowerDontConnect` for lantern edge-case
 
@@ -363,7 +378,7 @@ See the following two screens to see the difference [Before][12]/[After][13].
 
 - Return variant helper block instead of actual one?
 - Could set color temperature directly on Unity lights.
-- Could change of lights to spot, which would be often better
+- Could change of lights to spot, which would be often better  
   Unfortunately many models don't have it rotated correctly.
 - Add configurable `shadowBias` to optimize self shading
 - More options are: `shadowRadios`
