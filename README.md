@@ -345,9 +345,13 @@ See the following two screens to see the difference [Before][12]/[After][13].
 
 ## Changelog
 
+### Version 0.7.2
+
+- Bugfix issue when power is cut (light not turning off)
+
 ### Version 0.7.1
 
-- Bugfix for dedicated servers
+- Bugfix for dedicated servers (corrupt data transfer)
 
 ### Version 0.7.0
 
