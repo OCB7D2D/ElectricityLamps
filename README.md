@@ -345,6 +345,10 @@ See the following two screens to see the difference [Before][12]/[After][13].
 
 ## Changelog
 
+### Version 0.7.3
+
+- Change previous fix to dedicated server mode only
+
 ### Version 0.7.2
 
 - Bugfix issue when power is cut (light not turning off)

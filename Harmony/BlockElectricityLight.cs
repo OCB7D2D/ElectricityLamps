@@ -122,7 +122,8 @@ public class BlockElectricityLight : BlockPowered
         if (tileEntity == null) return true;
         BlockEntityData blockEntity = tileEntity.GetChunk().GetBlockEntity(_blockPos);
         if (blockEntity == null) return true;
-        tileEntity.IsToggled = (_blockValue.meta & 2) == 2;
+        if (!SingletonMonoBehaviour<ConnectionManager>.Instance.IsServer)
+            tileEntity.IsToggled = (_blockValue.meta & 2) == 2;
         var props = Block.list[_blockValue.type].Properties;
         tileEntity.IsPoweredPOI = !props.Values.ContainsKey("PoweredPOI") ?
             false : StringParsers.ParseBool(props.Values["PoweredPOI"]);
