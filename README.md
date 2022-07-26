@@ -345,6 +345,10 @@ See the following two screens to see the difference [Before][12]/[After][13].
 
 ## Changelog
 
+### Version 0.7.1
+
+- Add automated translations for 27 languages via DeepL
+
 ### Version 0.5.1
 
 - Added `LightOrientation` option to realign spotlights
