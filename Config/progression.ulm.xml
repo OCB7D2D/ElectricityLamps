@@ -1,0 +1,10 @@
+<configs>
+
+<!-- Adding the Special Lamps to a benifit of completing the Tech Junkie Book Collection -->
+<append xpath="/progression/perks/perk[@name='perkTechJunkie8Complete']">
+	<effect_group>
+		<passive_effect name="RecipeTagUnlocked" operation="base_set" level="1" value="1" tags="ocbRoadBarricade,ocbSpecialCeilLampVariantHelper,ocbSpecialGroundLampVariantHelper" />
+	</effect_group>
+</append>
+
+</configs>
