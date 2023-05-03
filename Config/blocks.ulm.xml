@@ -1,0 +1,10 @@
+<Configs>
+
+<!-- Adjusting lamps for Undead Legacy, only requiring the generatorbankschematic to unlock them -->
+<set xpath="/blocks/block[@name='ocbSignLampMaster']/property[@name='UnlockedBy']/@value">generatorbankSchematic</set>
+<set xpath="/blocks/block[@name='ocbDeskLampMaster']/property[@name='UnlockedBy']/@value">generatorbankSchematic</set>
+<set xpath="/blocks/block[@name='ocbSmallLampMaster']/property[@name='UnlockedBy']/@value">generatorbankSchematic</set>
+<set xpath="/blocks/block[@name='ocbMediumLampMaster']/property[@name='UnlockedBy']/@value">generatorbankSchematic</set>
+<set xpath="/blocks/block[@name='ocbSpecialLampMaster']/property[@name='UnlockedBy']/@value">perkTechJunkie8Complete</set>
+	
+</Configs>

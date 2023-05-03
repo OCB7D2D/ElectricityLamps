@@ -1,0 +1,13 @@
+<configs>
+
+<!-- Adjusting recipes to work with Undead Legacy -->
+<setattribute xpath="/recipes/recipe[@name='ocbSignLampVariantHelper']" name="tags">learnable,workbenchCrafting</setattribute>
+<setattribute xpath="/recipes/recipe[@name='ocbDeskLampVariantHelper']" name="tags">learnable,workbenchCrafting</setattribute>
+<setattribute xpath="/recipes/recipe[@name='ocbSmallCeilLampVariantHelper']" name="tags">learnable,workbenchCrafting</setattribute>
+<setattribute xpath="/recipes/recipe[@name='ocbSmallWallLampVariantHelper']" name="tags">learnable,workbenchCrafting</setattribute>
+<setattribute xpath="/recipes/recipe[@name='ocbMediumCeilLampVariantHelper']" name="tags">learnable,workbenchCrafting</setattribute>
+<setattribute xpath="/recipes/recipe[@name='ocbMediumWallLampVariantHelper']" name="tags">learnable,workbenchCrafting</setattribute>
+<setattribute xpath="/recipes/recipe[@name='ocbSpecialCeilLampVariantHelper']" name="tags">learnable,workbenchCrafting</setattribute>
+<setattribute xpath="/recipes/recipe[@name='ocbSpecialGroundLampVariantHelper']" name="tags">learnable,workbenchCrafting</setattribute>
+	
+</configs>
